@@ -1,0 +1,7 @@
+<resources>
+    <!-- The default letter tile text size -->
+    <dimen name="rufous_text_tile_letter_font_size">33sp</dimen>
+    <!-- The deafult tile size -->
+    <dimen name="rufous_text_tile_letter_size">64dp</dimen>
+
+</resources>
