@@ -1,4 +1,4 @@
-package pappin.rufous.widget;
+package pappin.rufous.helper;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -13,7 +13,7 @@ import pappin.rufous.graphics.G;
 /**
  * Created by bpappin on 16-05-05.
  */
-public class ResUtil {
+public class ResHelper {
 
     /**
      * Converts a colour resource into an integer colour.

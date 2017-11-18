@@ -2,14 +2,14 @@ package pappin.rufous.graphics;
 
 import android.graphics.Color;
 
-import pappin.rufous.widget.ResUtil;
+import pappin.rufous.helper.ResHelper;
 
 
 /**
  * Created by bpappin on 2017-01-16.
  */
 
-public class ColourUtil extends ResUtil {
+public class ColourUtil extends ResHelper {
     public static int toColor(String hex) {
         return Color.parseColor(hex);
     }

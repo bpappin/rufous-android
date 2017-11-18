@@ -17,10 +17,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 
-import pappin.rufous.widget.ResUtil;
+import pappin.rufous.helper.ResHelper;
 
 
-public class BitmapUtil extends ResUtil {
+public class BitmapUtil extends ResHelper {
     private static final String TAG = "BitmapUtil";
 
     public interface BitmapReceiver {

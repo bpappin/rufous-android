@@ -1,4 +1,7 @@
 <resources>
+
+    <string name="rufous_widget_formatted_placeholder">Placeholder: %1$s</string>
+
     <!-- All of the possible tile background colors -->
     <array name="rufous_text_tile_letter_colors">
         <item>#f16364</item>

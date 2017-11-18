@@ -1,4 +1,4 @@
-package pappin.rufous.text;
+package pappin.rufous.graphics;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -15,9 +15,6 @@ import android.text.TextPaint;
 import android.text.TextUtils;
 
 import pappin.rufous.R;
-import pappin.rufous.graphics.BitmapFilter;
-import pappin.rufous.graphics.BitmapUtil;
-import pappin.rufous.graphics.G;
 
 /**
  * Used to create a {@link Bitmap} that contains a letter used in the English
