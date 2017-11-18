@@ -1,5 +1,11 @@
 apply plugin: 'com.android.library'
 
+ext {
+    libraryName = 'Rufous Project: Widgets'
+    artifact = 'rufous-widgets'
+    libraryDescription = 'Rufous Project: Widgets'
+}
+
 android {
     compileSdkVersion 27
 
@@ -9,7 +15,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
-        versionName "1.0"
+        versionName libraryVersion
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -33,4 +39,12 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:27.+'
     compile project(path: ':rufous-utilities')
     implementation 'com.android.support:design:27.+'
+    implementation 'com.android.support:palette-v7:27.+'
+    implementation 'com.android.support:recyclerview-v7:27.+'
+    implementation 'com.android.support:cardview-v7:27.+'
+    implementation 'com.android.support:gridlayout-v7:27.+'
 }
+
+// Place it at the end of the file
+apply from: '../installv1.gradle'
+apply from: '../bintrayv1.gradle'

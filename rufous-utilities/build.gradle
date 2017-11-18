@@ -1,15 +1,28 @@
 apply plugin: 'com.android.library'
 
+ext {
+    libraryName = 'Rufous Project: Utilities'
+    artifact = 'rufous-utilities'
+    libraryDescription = 'Rufous Project: Utilities'
+}
+
+
+//def siteUrl = 'https://github.com/bpappin/rufous-android'      // Homepage URL of the library
+//def gitUrl = 'https://github.com/bpappin/rufous-android.git'   // Git repository URL
+//group = "pappin.rufous"
+// This is the library version used when deploying the artifact
+//version = "1.0.0-SNAPSHOT"
+//versionInt = 1
+
 android {
     compileSdkVersion 27
-
 
 
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
-        versionName "1.0"
+        versionName libraryVersion
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -17,7 +30,12 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -33,3 +51,9 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.2.4'
     implementation 'com.github.davidmoten:geo:0.7.5'
 }
+
+// Place it at the end of the file
+apply from: '../installv1.gradle'
+apply from: '../bintrayv1.gradle'
+//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'

@@ -172,7 +172,7 @@ public class G {
      * @return A new or previously chosen color for <code>key</code>.
      */
     public static int pickColor(Context context, String key) {
-        return pickColor(context, R.array.tile_letter_colors, key);
+        return pickColor(context, R.array.rufous_text_tile_letter_colors, key);
     }
 
     /**
