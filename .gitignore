@@ -16,6 +16,8 @@ out/
 # Gradle files
 .gradle/
 build/
+.gradle
+/local.properties
 
 # Local configuration file (sdk path, etc)
 local.properties
@@ -31,6 +33,7 @@ proguard/
 
 # Android Studio captures folder
 captures/
+.externalNativeBuild
 
 # Intellij
 *.iml
@@ -53,3 +56,9 @@ google-services.json
 freeline.py
 freeline/
 freeline_project_description.json
+
+# macOs files
+.DS_Store
+
+
+
