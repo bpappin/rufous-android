@@ -1,4 +1,4 @@
-package github.com.rufousutilities;
+package pappin.rufous;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("github.com.rufousutilities.test", appContext.getPackageName());
+        assertEquals("github.com.mylibrary.test", appContext.getPackageName());
     }
 }

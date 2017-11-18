@@ -1,4 +1,4 @@
-package github.com.rufousutilities
+package pappin.rufous
 
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView

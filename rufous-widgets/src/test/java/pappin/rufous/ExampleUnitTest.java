@@ -1,4 +1,4 @@
-package github.com.rufousutilities;
+package pappin.rufous;
 
 import org.junit.Test;
 

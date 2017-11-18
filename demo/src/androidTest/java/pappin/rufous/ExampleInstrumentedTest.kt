@@ -1,4 +1,4 @@
-package github.com.rufousutilities
+package pappin.rufous
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
