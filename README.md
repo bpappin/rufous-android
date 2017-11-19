@@ -9,7 +9,7 @@ The most recent version is [ ![Download](https://api.bintray.com/packages/bpappi
 ### Installation ###
 ```gradle
 	dependencies {
-		implementation 'pappin.rufous:rufous-utilities:0.0.0'
+		implementation 'pappin.rufous:rufous-utilities:1.0.0'
 	}
 ```
 
@@ -23,7 +23,7 @@ The most recent version is [ ![Download](https://api.bintray.com/packages/bpappi
 ### Installation ###
 ```gradle
 	dependencies {
-		implementation 'pappin.rufous:rufous-widgets:0.0.0'
+		implementation 'pappin.rufous:rufous-widgets:1.0.0'
 	}
 ```
 
