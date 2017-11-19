@@ -38,6 +38,9 @@ bintray {
     key = bintrayApikey //properties.getProperty("bintray.apikey")
 
     configurations = ['archives']
+    //    dryRun = false //[Default: false] Whether to run this as dry-run, without deploying
+    //    publish = true //[Default: false] Whether version should be auto published after an upload
+    //    override = false //[Default: false] Whether to override version artifacts already published
     pkg {
         repo = bintrayRepo
         name = bintrayName
@@ -47,6 +50,8 @@ bintray {
         licenses = allLicenses
         publish = true
         publicDownloadNumbers = true
+        // githubRepo = 'bpappin/rufous-android' //Optional Github repository
+        // githubReleaseNotesFile = 'README.md' //Optional Github readme file
         version {
             desc = libraryDescription
             gpg {
