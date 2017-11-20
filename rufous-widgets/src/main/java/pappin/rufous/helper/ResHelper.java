@@ -1,7 +1,9 @@
 package pappin.rufous.helper;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.support.annotation.ColorRes;
@@ -14,6 +16,19 @@ import pappin.rufous.graphics.G;
  * Created by bpappin on 16-05-05.
  */
 public class ResHelper {
+    /**
+     * converts a resource drawable into a URI.
+     *
+     * @param context
+     * @param resID
+     * @return
+     */
+    public static Uri resourceToUri(Context context, @DrawableRes int resID) {
+        return Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
+                context.getResources().getResourcePackageName(resID) + '/' +
+                context.getResources().getResourceTypeName(resID) + '/' +
+                context.getResources().getResourceEntryName(resID));
+    }
 
     /**
      * Converts a colour resource into an integer colour.
@@ -36,6 +51,7 @@ public class ResHelper {
 
     /**
      * Converts a colour resoruce into its hex representation.
+     *
      * @param context
      * @param resId
      * @return
@@ -47,7 +63,6 @@ public class ResHelper {
     }
 
     /**
-     *
      * @param context
      * @param resId
      * @return
@@ -57,12 +72,12 @@ public class ResHelper {
         Bitmap bitmap = null;
         if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
             bitmap = G.drawableToBitmap(context
-                                                .getResources()
-                                                .getDrawable(resId, null));
+                    .getResources()
+                    .getDrawable(resId, null));
         } else {
             bitmap = G.drawableToBitmap(context
-                                                .getResources()
-                                                .getDrawable(resId));
+                    .getResources()
+                    .getDrawable(resId));
         }
         return bitmap;
     }
