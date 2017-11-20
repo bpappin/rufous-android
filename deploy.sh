@@ -1,3 +1,3 @@
 #!/bin/sh
-./gradlew install bintrayUpload
+./gradlew clean build bintrayUpload
 
