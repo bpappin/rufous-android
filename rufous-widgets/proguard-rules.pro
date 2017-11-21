@@ -19,3 +19,11 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-dontwarn com.bumptech.glide.**
+-dontwarn com.facebook.drawee.**
+
+-dontwarn pappin.rufous.helper.ImageViewUrlHandlerGlide
+-dontwarn pappin.rufous.helper.ImageViewUrlHandlerFresco
+-dontwarn pappin.rufous.helper.DraweeHelper
+
