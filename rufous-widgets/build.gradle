@@ -57,8 +57,8 @@ dependencies {
     compileOnly 'com.facebook.fresco:imagepipeline-okhttp3:1.2.0'
     compileOnly 'com.facebook.fresco:imagepipeline:1.2.0'
     compileOnly 'com.github.bumptech.glide:glide:4.0.0-RC1'
-    implementation 'com.google.code.gson:gson:2.8.0'
-    implementation 'com.github.davidmoten:geo:0.7.5'
+    api 'com.google.code.gson:gson:2.8.0'
+    api 'com.github.davidmoten:geo:0.7.5'
 }
 
 // Place it at the end of the file
