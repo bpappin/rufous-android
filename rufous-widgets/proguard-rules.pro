@@ -22,3 +22,8 @@
 
 -dontwarn com.bumptech.glide.**
 -dontwarn com.facebook.drawee.**
+
+-dontwarn pappin.rufous.helper.ImageViewUrlHandlerGlide
+-dontwarn pappin.rufous.helper.ImageViewUrlHandlerFresco
+-dontwarn pappin.rufous.helper.DraweeHelper
+
