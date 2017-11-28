@@ -1,6 +1,5 @@
 package pappin.rufous.helper;
 
-import android.net.Uri;
 import android.widget.ImageView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -14,12 +13,12 @@ class ImageViewUrlHandlerFresco extends ImageViewHelper.DefaultImageViewUrlHandl
     @Override
     public void setImageFromUrl(ImageView view, String imageUrl) {
         if (view instanceof SimpleDraweeView) {
-            SimpleDraweeView drawee = (SimpleDraweeView) view;
-            Uri uri = Uri.parse(imageUrl);
+            SimpleDraweeView drawee = (SimpleDraweeView)view;
+
             DraweeController controller = Fresco
                     .newDraweeControllerBuilder()
                     .setAutoPlayAnimations(true)
-                    .setUri(uri)
+                    .setUri(imageUrl)
                     .setTapToRetryEnabled(true)
                     .setOldController(drawee.getController())
                     // .setControllerListener(listener)

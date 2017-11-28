@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION;
@@ -21,7 +22,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import pappin.rufous.R;
+import pappin.rufous.graphics.ColourUtil;
 
 
 /**
@@ -69,24 +70,24 @@ public class StyleHelper {
      */
     public static class Menus {
 
-//        public static void tintAccent(Context context, Menu menu, @IdRes int resId) {
-//            MenuItem lsmenu = menu.findItem(resId);
-//            if (lsmenu != null) {
-//                if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
-//                    lsmenu
-//                            .getIcon()
-//                            .setTint(context
-//                                             .getResources()
-//                                             .getColor(R.color.colorAccent)
-//                            );
-//                } else {
-//                    Drawable drawable = lsmenu.getIcon();
-//                    legacyTint(context
-//                                       .getResources()
-//                                       .getColor(R.color.colorAccent), drawable);
-//                }
-//            }
-//        }
+        //        public static void tintAccent(Context context, Menu menu, @IdRes int resId) {
+        //            MenuItem lsmenu = menu.findItem(resId);
+        //            if (lsmenu != null) {
+        //                if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
+        //                    lsmenu
+        //                            .getIcon()
+        //                            .setTint(context
+        //                                             .getResources()
+        //                                             .getColor(R.color.colorAccent)
+        //                            );
+        //                } else {
+        //                    Drawable drawable = lsmenu.getIcon();
+        //                    legacyTint(context
+        //                                       .getResources()
+        //                                       .getColor(R.color.colorAccent), drawable);
+        //                }
+        //            }
+        //        }
 
         public static void tintColour(Context context, Menu menu, @IdRes int menuResId, @ColorRes int colourResId) {
             MenuItem lsmenu = menu.findItem(menuResId);
@@ -147,11 +148,28 @@ public class StyleHelper {
                                           .getColor(colourResId));
             }
         }
+
+        public static void tintColorCompoundDrawables(Context context, TextView textView, String hexColour) {
+            tintColorCompoundDrawables(context, textView, ColourUtil.toColor(hexColour));
+        }
+
+        public static void tintColorCompoundDrawables(Context context, TextView textView, int colour) {
+            for (Drawable drawable : textView.getCompoundDrawables()) {
+                if (drawable != null) {
+                    drawable.setColorFilter(new PorterDuffColorFilter(colour, PorterDuff.Mode.SRC_IN));
+                }
+            }
+        }
     }
 
     public static class Image {
         public static void tint(Context context, ImageView view, @ColorRes int colourResId) {
             int tintColour = ContextCompat.getColor(context, colourResId);
+            tintColour(context, view, tintColour);
+        }
+
+        public static void tintColour(Context context, ImageView view, @ColorInt int tintColour) {
+            //            int tintColour = ContextCompat.getColor(context, colourResId);
 
             if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
                 int[][] states = new int[][]{
@@ -170,21 +188,28 @@ public class StyleHelper {
 
         }
 
-        public static class Graphic {
-            public static Drawable getTintedDrawableOfColorResId(@NonNull Context context, @NonNull Bitmap inputBitmap, @ColorRes int colorResId) {
-                return getTintedDrawable(context, new BitmapDrawable(context.getResources(), inputBitmap), ContextCompat.getColor(context, colorResId));
-            }
+        public static void tintColour(Context context, ImageView view, String hexColour) {
+            tintColour(context, view, ColourUtil.toColor(hexColour));
 
-            public static Drawable getTintedDrawable(@NonNull Context context, @NonNull Bitmap inputBitmap, @ColorInt int color) {
-                return getTintedDrawable(context, new BitmapDrawable(context.getResources(), inputBitmap), color);
-            }
+        }
 
-            public static Drawable getTintedDrawable(@NonNull Context context, @NonNull Drawable inputDrawable, @ColorInt int color) {
-                Drawable wrapDrawable = DrawableCompat.wrap(inputDrawable);
-                DrawableCompat.setTint(wrapDrawable, color);
-                DrawableCompat.setTintMode(wrapDrawable, PorterDuff.Mode.SRC_IN);
-                return wrapDrawable;
-            }
+
+    }
+
+    public static class Graphic {
+        public static Drawable getTintedDrawableOfColorResId(@NonNull Context context, @NonNull Bitmap inputBitmap, @ColorRes int colorResId) {
+            return getTintedDrawable(context, new BitmapDrawable(context.getResources(), inputBitmap), ContextCompat.getColor(context, colorResId));
+        }
+
+        public static Drawable getTintedDrawable(@NonNull Context context, @NonNull Bitmap inputBitmap, @ColorInt int color) {
+            return getTintedDrawable(context, new BitmapDrawable(context.getResources(), inputBitmap), color);
+        }
+
+        public static Drawable getTintedDrawable(@NonNull Context context, @NonNull Drawable inputDrawable, @ColorInt int color) {
+            Drawable wrapDrawable = DrawableCompat.wrap(inputDrawable);
+            DrawableCompat.setTint(wrapDrawable, color);
+            DrawableCompat.setTintMode(wrapDrawable, PorterDuff.Mode.SRC_IN);
+            return wrapDrawable;
         }
     }
 
