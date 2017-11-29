@@ -1,1 +1,1 @@
-include ':demo', ':rufous-utilities', ':rufous-widgets'
+include ':demo', ':rufous-widgets'
