@@ -4,4 +4,6 @@
     <!-- The deafult tile size -->
     <dimen name="rufous_text_tile_letter_size">64dp</dimen>
 
+    <dimen name="rufous_multidraweeview_stacked_layout_offset">4dp</dimen>
+
 </resources>

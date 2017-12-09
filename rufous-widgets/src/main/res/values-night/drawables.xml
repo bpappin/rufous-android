@@ -1,0 +1,7 @@
+<resources>
+    <item name="ic_placeholder_people" type="drawable">@drawable/ic_people_grey_300_24dp</item>
+    <item name="ic_placeholder_person" type="drawable">@drawable/ic_person_grey_300_24dp</item>
+    <item name="ic_placeholder_people_outline" type="drawable">@drawable/ic_people_outline_grey_300_24dp</item>
+    <item name="ic_placeholder_person_outline" type="drawable">@drawable/ic_person_outline_grey_300_24dp</item>
+    <item name="ic_placeholder_broken_image" type="drawable">@drawable/ic_broken_image_grey_300_24dp</item>
+</resources>
