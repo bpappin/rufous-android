@@ -14,7 +14,6 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.interfaces.DraweeController;
@@ -24,12 +23,13 @@ import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
 import pappin.rufous.util.LogUtil;
+import pappin.rufous.util.StringUtil;
 
 
 public class MultiDraweeView extends View {
 
     public static final String TAG = LogUtil.tag("MultiDraweeView");
-    public static final boolean DBG = false;
+    public static final boolean DBG = true;
     private final MultiDraweeHolder<GenericDraweeHierarchy> mMultiDraweeHolder = new MultiDraweeHolder<>();
     private int mColumnCount = 1;
     private int mSpaceSize;
@@ -37,8 +37,9 @@ public class MultiDraweeView extends View {
 //    private String[] mUris = new String[0];
     private int drawnTimes;
     private int drawnDuration;
-    private MiltiDraweeDataSource dataSource;
-    private MiltiDraweeLayoutManager layoutManager = new MiltiDraweeTiledLayoutManager();
+    //    private MiltiDraweeDataSource dataSourceX;
+    private MiltiDraweeLayoutManager layoutManager;
+
 
     public MultiDraweeView(Context context) {
         super(context);
@@ -56,6 +57,7 @@ public class MultiDraweeView extends View {
     }
 
     private void init(Context context) {
+        layoutManager = new MiltiDraweeTiledLayoutManager(context);
         mSpaceSize = (int) dipToPixels(context, 3f);
     }
 
@@ -63,94 +65,115 @@ public class MultiDraweeView extends View {
 //        setImageUris(new MultiDraweeAssetDataSource(getContext(), uris.toArray(new String[uris.size()])));
 //    }
 
+
     public MiltiDraweeLayoutManager getLayoutManager() {
         return layoutManager;
     }
 
     public void setLayoutManager(MiltiDraweeLayoutManager layoutManager) {
-        if(layoutManager == null){
+        if (layoutManager == null) {
             throw new IllegalArgumentException("The layout manager must not be null.");
         }
         this.layoutManager = layoutManager;
     }
 
     public void setImageUris(MiltiDraweeDataSource source) {
-        this.dataSource = source;
-        resetSource();
-    }
-
-    private void resetSource() {
-        if (dataSource.getImageCount() == 0) {
+//        this.dataSourceX = source;
+        if (source.getImageCount() == 0) {
             return;
         }
         mMultiDraweeHolder.clear();
 
 
         GenericDraweeHierarchyBuilder hierarchyBuilder =
-                new GenericDraweeHierarchyBuilder(getResources())
-                        .setActualImageScaleType(ScalingUtils.ScaleType.CENTER_CROP)
-                        .setFadeDuration(0)
-                        .setPlaceholderImage(dataSource.getFallbackPlaceholderResource());
+                new GenericDraweeHierarchyBuilder(getResources());
+        hierarchyBuilder.setPlaceholderImage(source.getFallbackPlaceholderResource());
+        hierarchyBuilder.setFadeDuration(0);
+
+        layoutManager.configureDrawees(hierarchyBuilder);
 
         drawnTimes = 0;
         drawnDuration = 0;
 
+        if (DBG) {
+            Log.i(TAG, "Processing " + source.getImageCount() + " urls.");
+        }
+
 //        this.mUris = source.getImageUrls();
-        for (int i = 0; i < dataSource.getImageCount(); i++) {
-            String uriStr = dataSource.getImageUrl(i);
-            Uri uri = Uri.parse(uriStr);
+        for (int i = 0; i < source.getImageCount(); i++) {
 
             DraweeHolder<GenericDraweeHierarchy> draweeHolder = DraweeHolder.create(hierarchyBuilder.build(), getContext());
 
-            ImageRequest imageRequest =
-                    ImageRequestBuilder
-                            .newBuilderWithSource(uri)
-                            //                            .setResizeOptions(options)
-                            .setProgressiveRenderingEnabled(false)
-                            .build();
+            String uriStr = source.getImageUrl(i);
+            if (StringUtil.isEmpty(uriStr)) {
+                setupPlaceholder(source, draweeHolder);
+            } else {
+                Uri uri = Uri.parse(uriStr);
 
-            draweeHolder
-                    .getHierarchy()
-                    .setPlaceholderImage(dataSource.getPlaceholderDrawable(i));
+                if (DBG) {
+                    Log.i(TAG, "Processing url: " + uri.toString());
+                }
+
+
+                ImageRequest imageRequest =
+                        ImageRequestBuilder
+                                .newBuilderWithSource(uri)
+                                //                            .setResizeOptions(options)
+                                .setProgressiveRenderingEnabled(false)
+                                .build();
+
+                draweeHolder
+                        .getHierarchy()
+                        .setPlaceholderImage(source.getPlaceholderDrawable(i));
 //                    .setPlaceholderImage(placeholderResId);
 
 
-            DraweeController controller = Fresco
-                    .newDraweeControllerBuilder()
-                    .setImageRequest(imageRequest)
-                    .setOldController(draweeHolder
-                            .getController())
-                    .build();
-            draweeHolder.setController(controller);
-            draweeHolder
-                    .getTopLevelDrawable()
-                    .setCallback(this);
+                DraweeController controller = Fresco
+                        .newDraweeControllerBuilder()
+                        .setImageRequest(imageRequest)
+                        .setOldController(draweeHolder
+                                .getController())
+                        .build();
+                draweeHolder.setController(controller);
+                draweeHolder
+                        .getTopLevelDrawable()
+                        .setCallback(this);
+            }
+
 
             mMultiDraweeHolder.add(draweeHolder);
         }
 
         if (mMultiDraweeHolder.size() == 0) {
+            if (DBG) {
+                Log.i(TAG, "No urls to draw, seting up default placeholder...");
+            }
             DraweeHolder<GenericDraweeHierarchy> draweeHolder = DraweeHolder.create(hierarchyBuilder.build(), getContext());
 
-            draweeHolder
-                    .getHierarchy()
-                    .setPlaceholderImage(dataSource.getFallbackPlaceholderResource());
-
-            DraweeController controller = Fresco
-                    .newDraweeControllerBuilder()
-                    .setOldController(draweeHolder
-                            .getController())
-                    .build();
-            draweeHolder.setController(controller);
-            draweeHolder
-                    .getTopLevelDrawable()
-                    .setCallback(this);
+            setupPlaceholder(source, draweeHolder);
 
             mMultiDraweeHolder.add(draweeHolder);
         }
 
         requestLayout();
     }
+
+    private void setupPlaceholder(MiltiDraweeDataSource source, DraweeHolder<GenericDraweeHierarchy> draweeHolder) {
+        draweeHolder
+                .getHierarchy()
+                .setPlaceholderImage(source.getFallbackPlaceholderResource());
+
+        DraweeController controller = Fresco
+                .newDraweeControllerBuilder()
+                .setOldController(draweeHolder
+                        .getController())
+                .build();
+        draweeHolder.setController(controller);
+        draweeHolder
+                .getTopLevelDrawable()
+                .setCallback(this);
+    }
+
 
     @Override
     public void onStartTemporaryDetach() {
@@ -192,8 +215,9 @@ public class MultiDraweeView extends View {
         long end = System.currentTimeMillis();
         drawnTimes++;
         drawnDuration += (end - start);
-        if (DBG)
-            Log.i(TAG, this.hashCode() + " onDraw() method duration = " + drawnDuration + "ms" + " draw " + drawnTimes + " times" + " uri count " + dataSource.getImageCount());
+        if (DBG) {
+            Log.i(TAG, this.hashCode() + " onDraw() method duration = " + drawnDuration + "ms" + " draw " + drawnTimes + " times" + " drawee count " + mMultiDraweeHolder.size());
+        }
     }
 
     @Override
@@ -225,8 +249,9 @@ public class MultiDraweeView extends View {
             //            Rect invalidateRect = getBoundsFromIndex(dirtyIndex);
             if (invalidateRect.height() != 0 && invalidateRect.width() != 0) {
                 invalidate(invalidateRect);
-                if (DBG)
+                if (DBG) {
                     Log.i(TAG, this.hashCode() + " drawable code " + drawable.hashCode() + " invalidateDrawable " + invalidateRect.flattenToString());
+                }
             }
 
         }
@@ -234,8 +259,9 @@ public class MultiDraweeView extends View {
 
     @Override
     protected boolean verifyDrawable(Drawable who) {
-        if (DBG)
+        if (DBG) {
             Log.i(TAG, this.hashCode() + "verifyDrawable");
+        }
         return mMultiDraweeHolder.verifyDrawable(who) || super.verifyDrawable(who);
     }
 

@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
@@ -18,6 +19,63 @@
         android:text="@string/title_home"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+
+
+    <pappin.rufous.widget.fresco.MultiDraweeView
+        android:id="@+id/drawee_grid"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/message"
+        fresco:actualImageScaleType="focusCrop"
+        fresco:placeholderImage="@drawable/ic_placeholder_broken_image"
+        fresco:roundAsCircle="false"
+        fresco:srcCompat="@drawable/ic_placeholder_broken_image"/>
+
+    <pappin.rufous.widget.fresco.MultiDraweeView
+        android:id="@+id/drawee_stack"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:scaleType="centerCrop"
+        fresco:actualImageScaleType="focusCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/drawee_grid"
+        fresco:placeholderImage="@drawable/ic_placeholder_broken_image"
+        fresco:roundAsCircle="false"
+        fresco:srcCompat="@drawable/ic_placeholder_broken_image"/>
+
+    <pappin.rufous.widget.fresco.MultiDraweeView
+        android:id="@+id/drawee_grid_circle"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toEndOf="@+id/drawee_grid"
+        app:layout_constraintTop_toBottomOf="@+id/message"
+        fresco:actualImageScaleType="focusCrop"
+        fresco:placeholderImage="@drawable/ic_placeholder_broken_image"
+        fresco:roundAsCircle="true"
+        fresco:srcCompat="@drawable/ic_placeholder_broken_image"/>
+
+    <pappin.rufous.widget.fresco.MultiDraweeView
+        android:id="@+id/drawee_stack_circle"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toEndOf="@+id/drawee_stack"
+        app:layout_constraintTop_toBottomOf="@+id/drawee_grid_circle"
+        fresco:actualImageScaleType="focusCrop"
+        fresco:placeholderImage="@drawable/ic_placeholder_broken_image"
+        fresco:roundAsCircle="true"
+        fresco:srcCompat="@drawable/ic_placeholder_broken_image"/>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"

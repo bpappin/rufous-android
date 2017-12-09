@@ -17,8 +17,8 @@ public class MultiDraweeBasicDataSource implements MiltiDraweeDataSource {
     private Context context;
     private String[] imageUrls = new String[0];
 
-    public MultiDraweeBasicDataSource(Context context, String[] imageNamesAndUrls) {
-        this(context, imageNamesAndUrls, R.drawable.ic_placeholder_broken_image);
+    public MultiDraweeBasicDataSource(Context context, String[] imageUrls) {
+        this(context, imageUrls, R.drawable.ic_placeholder_broken_image);
     }
 
     /**

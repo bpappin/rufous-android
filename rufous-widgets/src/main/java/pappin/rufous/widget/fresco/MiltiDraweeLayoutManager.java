@@ -3,6 +3,7 @@ package pappin.rufous.widget.fresco;
 import android.graphics.Rect;
 
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.view.MultiDraweeHolder;
 
 /**
@@ -13,6 +14,6 @@ import com.facebook.drawee.view.MultiDraweeHolder;
 
 public interface MiltiDraweeLayoutManager {
 
-
+    void configureDrawees(GenericDraweeHierarchyBuilder hierarchyBuilder);
     Rect getDrawablePosition(MultiDraweeView multiDraweeView, MultiDraweeHolder<GenericDraweeHierarchy> multiDraweeHolder, int index);
 }
