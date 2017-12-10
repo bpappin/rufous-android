@@ -54,9 +54,9 @@ public class MultiDraweeLetterTileDataSource implements MiltiDraweeDataSource {
             return AppCompatResources.getDrawable(context, getFallbackPlaceholderResource());
         }
         if (roundTile) {
-            return LetterTileProvider.createRoundLetterTile(context, colourArrayResId, imageNamesAndUrls[0][i]);
+            return LetterTileProvider.createRoundLetterTile(context, colourArrayResId, R.dimen.rufous_text_tile_letter_size_big, imageNamesAndUrls[0][i]);
         } else {
-            return LetterTileProvider.createSquareLetterTile(context, colourArrayResId, imageNamesAndUrls[0][i]);
+            return LetterTileProvider.createSquareLetterTile(context, colourArrayResId, R.dimen.rufous_text_tile_letter_size_big, imageNamesAndUrls[0][i]);
         }
     }
 

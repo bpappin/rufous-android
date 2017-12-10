@@ -84,7 +84,7 @@ public class DemoActivity extends AppCompatActivity {
 
         draweePiled = findViewById(R.id.drawee_piled_square);
 //        draweeStack.setBackgroundResource(R.color.cardview_dark_background);
-        draweePiled.setLayoutManager(new MiltiDraweeStackedLayoutManager(this));
+        draweePiled.setLayoutManager(new MiltiDraweePiledLayoutManager(this));
         draweePiled.setImageUris(source1);
 
         draweePiledCircle = findViewById(R.id.drawee_piled_circle);
@@ -95,7 +95,7 @@ public class DemoActivity extends AppCompatActivity {
 
         draweeStacked = findViewById(R.id.drawee_stacked_square);
 //        draweeStack.setBackgroundResource(R.color.cardview_dark_background);
-        draweeStacked.setLayoutManager(new MiltiDraweePiledLayoutManager(this));
+        draweeStacked.setLayoutManager(new MiltiDraweeStackedLayoutManager(this));
         draweeStacked.setImageUris(source1);
 
         draweeStackedCircle = findViewById(R.id.drawee_stacked_circle);
