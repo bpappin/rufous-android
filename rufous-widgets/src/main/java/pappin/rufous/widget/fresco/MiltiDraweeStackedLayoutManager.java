@@ -1,9 +1,14 @@
 package pappin.rufous.widget.fresco;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.graphics.Rect;
 import android.support.annotation.DimenRes;
+import android.text.Layout;
+import android.util.LayoutDirection;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 
 import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
@@ -40,7 +45,7 @@ public class MiltiDraweeStackedLayoutManager extends MiltiDraweeAbstractLayoutMa
     @Override
     public void configureDrawees(GenericDraweeHierarchyBuilder hierarchyBuilder) {
         super.configureDrawees(hierarchyBuilder);
-        hierarchyBuilder.setActualImageScaleType(ScalingUtils.ScaleType.CENTER);
+        hierarchyBuilder.setActualImageScaleType(ScalingUtils.ScaleType.CENTER_CROP);
     }
 
     @Override
@@ -84,13 +89,13 @@ public class MiltiDraweeStackedLayoutManager extends MiltiDraweeAbstractLayoutMa
 //                case 3:
 //                    return new Rect(offset * 3, offset * 1, w, h);
                 case 0:
-                    return new Rect(offset * index, offset * index, width, height);
+                    return new Rect(offset * index, offset * index, width - (offset * index), height - (offset * index));
                 case 1:
-                    return new Rect(offset * index, offset * index, width, height);
+                    return new Rect(offset * index, offset * index, width - (offset * index), height - (offset * index));
                 case 2:
-                    return new Rect(offset * index, offset * index, width, height);
+                    return new Rect(offset * index, offset * index, width - (offset * index), height - (offset * index));
                 case 3:
-                    return new Rect(offset * index, offset * index, width, height);
+                    return new Rect(offset * index, offset * index, width - (offset * index), height - (offset * index));
             }
         }
         return new Rect(0, 0, width, height);

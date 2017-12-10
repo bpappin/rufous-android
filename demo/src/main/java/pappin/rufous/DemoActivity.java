@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import pappin.rufous.widget.fresco.MiltiDraweePiledLayoutManager;
 import pappin.rufous.widget.fresco.MiltiDraweeStackedLayoutManager;
 import pappin.rufous.widget.fresco.MiltiDraweeTiledLayoutManager;
 import pappin.rufous.widget.fresco.MultiDraweeBasicDataSource;
@@ -20,9 +21,11 @@ public class DemoActivity extends AppCompatActivity {
 
     private BottomNavigationView navigation;
     private MultiDraweeView draweeGrid;
-    private MultiDraweeView draweeStack;
+    private MultiDraweeView draweePiled;
     private MultiDraweeView draweeGridCircle;
-    private MultiDraweeView draweeStackCircle;
+    private MultiDraweeView draweePiledCircle;
+    private MultiDraweeView draweeStacked;
+    private MultiDraweeView draweeStackedCircle;
     private TextView message;
     private OnNavigationItemSelectedListener onNavigationItemSelectedListener = new OnNavigationItemSelectedListener() {
 
@@ -64,13 +67,13 @@ public class DemoActivity extends AppCompatActivity {
 
 
         final String[] imageUrls = {"http://lorempixel.com/400/200/people/One", "http://lorempixel.com/400/200/people/Two", "http://lorempixel.com/400/200/people/Three", null};
-        final String[] names = {"One Name", "Two Name", "Three Name", "Four Name"};
+        final String[] names = {"One Name", null, "Three Name", "Four Name"};
         final String[][] letterData = {names, imageUrls};
 
         final MultiDraweeBasicDataSource source1 = new MultiDraweeBasicDataSource(this, imageUrls);
         final MultiDraweeLetterTileDataSource source2 = new MultiDraweeLetterTileDataSource(this, letterData, true);
 
-        draweeGrid = findViewById(R.id.drawee_grid);
+        draweeGrid = findViewById(R.id.drawee_grid_square);
         draweeGrid.setLayoutManager(new MiltiDraweeTiledLayoutManager(this));
         draweeGrid.setImageUris(source1);
 
@@ -79,14 +82,25 @@ public class DemoActivity extends AppCompatActivity {
         draweeGridCircle.setImageUris(source2);
 
 
-        draweeStack = findViewById(R.id.drawee_stack);
-        draweeStack.setBackgroundResource(R.color.cardview_dark_background);
-        draweeStack.setLayoutManager(new MiltiDraweeStackedLayoutManager(this));
-        draweeStack.setImageUris(source1);
+        draweePiled = findViewById(R.id.drawee_piled_square);
+//        draweeStack.setBackgroundResource(R.color.cardview_dark_background);
+        draweePiled.setLayoutManager(new MiltiDraweeStackedLayoutManager(this));
+        draweePiled.setImageUris(source1);
 
-        draweeStackCircle = findViewById(R.id.drawee_stack_circle);
-        draweeStackCircle.setBackgroundResource(R.color.cardview_dark_background);
-        draweeStackCircle.setLayoutManager(new MiltiDraweeStackedLayoutManager(this, true));
-        draweeStackCircle.setImageUris(source1);
+        draweePiledCircle = findViewById(R.id.drawee_piled_circle);
+//        draweeStackCircle.setBackgroundResource(R.color.cardview_dark_background);
+        draweePiledCircle.setLayoutManager(new MiltiDraweePiledLayoutManager(this, true));
+        draweePiledCircle.setImageUris(source2);
+
+
+        draweeStacked = findViewById(R.id.drawee_stacked_square);
+//        draweeStack.setBackgroundResource(R.color.cardview_dark_background);
+        draweeStacked.setLayoutManager(new MiltiDraweePiledLayoutManager(this));
+        draweeStacked.setImageUris(source1);
+
+        draweeStackedCircle = findViewById(R.id.drawee_stacked_circle);
+//        draweeStackCircle.setBackgroundResource(R.color.cardview_dark_background);
+        draweeStackedCircle.setLayoutManager(new MiltiDraweeStackedLayoutManager(this, true));
+        draweeStackedCircle.setImageUris(source2);
     }
 }
