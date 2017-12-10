@@ -29,10 +29,9 @@ public class MultiDraweeLetterTileDataSource implements MiltiDraweeDataSource {
     }
 
     /**
-     *
-     * @param context the application context the componetn is working in.
-     * @param imageNamesAndUrls an array of names and URLs, with the names at index 0 and the URLs at index 1, so that String[..] = {name, url}.
-     * @param roundTile draw the placeholder initials image as a round or square.
+     * @param context             the application context the componetn is working in.
+     * @param imageNamesAndUrls   an array of names and URLs, with the names at index 0 and the URLs at index 1, so that String[..] = {name, url}.
+     * @param roundTile           draw the placeholder initials image as a round or square.
      * @param placeholderImageRes the default fallback placeholder image, if nothing can be generated.
      */
     public MultiDraweeLetterTileDataSource(Context context, String[][] imageNamesAndUrls, boolean roundTile, @DrawableRes int placeholderImageRes) {
@@ -51,19 +50,22 @@ public class MultiDraweeLetterTileDataSource implements MiltiDraweeDataSource {
 
     @Override
     public Drawable getPlaceholderDrawable(int i) {
-        if (i < 0 || i >= imageNamesAndUrls.length || StringUtil.isEmpty(imageNamesAndUrls[i][0])) {
+        if (i < 0 || i >= getImageCount() || StringUtil.isEmpty(imageNamesAndUrls[0][i])) {
             return AppCompatResources.getDrawable(context, getFallbackPlaceholderResource());
         }
         if (roundTile) {
-            return LetterTileProvider.createRoundLetterTile(context, colourArrayResId, imageNamesAndUrls[i][0]);
+            return LetterTileProvider.createRoundLetterTile(context, colourArrayResId, imageNamesAndUrls[0][i]);
         } else {
-            return LetterTileProvider.createSquareLetterTile(context, colourArrayResId, imageNamesAndUrls[i][0]);
+            return LetterTileProvider.createSquareLetterTile(context, colourArrayResId, imageNamesAndUrls[0][i]);
         }
     }
 
     @Override
     public int getImageCount() {
-        return imageNamesAndUrls.length;
+        if (imageNamesAndUrls.length == 0) {
+            return 0;
+        }
+        return imageNamesAndUrls[0].length;
     }
 
 //    @Override
@@ -73,6 +75,6 @@ public class MultiDraweeLetterTileDataSource implements MiltiDraweeDataSource {
 
     @Override
     public String getImageUrl(int i) {
-        return imageNamesAndUrls[i][1]; //getImageUrls()[i];
+        return imageNamesAndUrls[1][i]; //getImageUrls()[i];
     }
 }

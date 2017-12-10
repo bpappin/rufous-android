@@ -106,7 +106,20 @@ public class MultiDraweeView extends View {
 
             String uriStr = source.getImageUrl(i);
             if (StringUtil.isEmpty(uriStr)) {
-                setupPlaceholder(source, draweeHolder);
+//                setupPlaceholder(source.getPlaceholderDrawable(i), draweeHolder);
+                draweeHolder
+                        .getHierarchy()
+                        .setPlaceholderImage(source.getPlaceholderDrawable(i));
+
+                DraweeController controller = Fresco
+                        .newDraweeControllerBuilder()
+                        .setOldController(draweeHolder
+                                .getController())
+                        .build();
+                draweeHolder.setController(controller);
+                draweeHolder
+                        .getTopLevelDrawable()
+                        .setCallback(this);
             } else {
                 Uri uri = Uri.parse(uriStr);
 

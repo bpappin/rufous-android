@@ -65,7 +65,7 @@ public class DemoActivity extends AppCompatActivity {
 
         final String[] imageUrls = {"http://lorempixel.com/400/200/people/One", "http://lorempixel.com/400/200/people/Two", "http://lorempixel.com/400/200/people/Three", null};
         final String[] names = {"One Name", "Two Name", "Three Name", "Four Name"};
-        final String[][] letterData = {imageUrls, names};
+        final String[][] letterData = {names, imageUrls};
 
         final MultiDraweeBasicDataSource source1 = new MultiDraweeBasicDataSource(this, imageUrls);
         final MultiDraweeLetterTileDataSource source2 = new MultiDraweeLetterTileDataSource(this, letterData, true);
@@ -76,7 +76,7 @@ public class DemoActivity extends AppCompatActivity {
 
         draweeGridCircle = findViewById(R.id.drawee_grid_circle);
         draweeGridCircle.setLayoutManager(new MiltiDraweeTiledLayoutManager(this, true));
-        draweeGridCircle.setImageUris(source1);
+        draweeGridCircle.setImageUris(source2);
 
 
         draweeStack = findViewById(R.id.drawee_stack);
