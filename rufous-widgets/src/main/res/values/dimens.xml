@@ -9,4 +9,8 @@
 
     <dimen name="rufous_multidraweeview_stacked_layout_offset">2dp</dimen>
 
+    <!-- Dimensions for contact letter tiles -->
+    <!--<item name="rufous_letter_to_tile_ratio" type="dimen">67%</item>-->
+    <item name="rufous_letter_to_tile_ratio" type="fraction">67%</item>
+
 </resources>
