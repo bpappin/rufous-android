@@ -14,11 +14,21 @@ public class LogUtil {
             .setPrettyPrinting()
             .create();
 
+    /**
+     * Ensures that log tags do not exceed 23 chars.
+     *
+     * @param tag the tag to check.
+     * @return the passed in tag, truncated is required.
+     */
     public static String tag(String tag) {
         if (tag.length() > 23) {
             return tag.substring(0, 22);
         }
         return tag;
+    }
+
+    public static String tag(Class clazz) {
+        return tag(clazz.getSimpleName());
     }
 
     public static void dump(String tag, Object entity) {

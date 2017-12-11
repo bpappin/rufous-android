@@ -1,2 +1,10 @@
 <resources>
+
+    <string name="formatted_minute">"%1$d minute"</string>
+    <string name="formatted_minutes">"%1$d minutes"</string>
+    <string name="formatted_second">"%1$d second"</string>
+    <string name="formatted_seconds">"%1$d seconds"</string>
+    <string name="formatted_hour">"%1$d hour"</string>
+    <string name="formatted_hours">"%1$d hours"</string>
+
 </resources>

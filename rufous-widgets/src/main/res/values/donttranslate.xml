@@ -14,4 +14,34 @@
         <item>#ad62a7</item>
     </array>
 
+    <!-- Phrase describing a time duration using seconds [CHAR LIMIT=16] -->
+    <plurals name="duration_seconds">
+        <item quantity="one">@string/formatted_second</item>
+        <item quantity="other">@string/formatted_seconds</item>
+    </plurals>
+
+    <!-- Phrase describing a time duration using minutes [CHAR LIMIT=16] -->
+    <plurals name="duration_minutes">
+        <item quantity="one">@string/formatted_minute</item>
+        <item quantity="other">@string/formatted_minutes</item>
+    </plurals>
+
+    <!-- Phrase describing a time duration using hours [CHAR LIMIT=16] -->
+    <plurals name="duration_hours">
+        <item quantity="one">@string/formatted_hour</item>
+        <item quantity="other">@string/formatted_hours</item>
+    </plurals>
+
+    <!--.format("%1$d.%2$02d", hours, decMinsX)-->
+    <!--.toString();-->
+    <!--} else {-->
+    <!--return f-->
+    <!--.format("%1$d:%2$02d", hours, minutes)-->
+    <!--.toString();-->
+    <!--}-->
+    <!--} else {-->
+    <!--return f-->
+    <!--.format("%1$d", hours)-->
+    <!--.toString();-->
+
 </resources>
