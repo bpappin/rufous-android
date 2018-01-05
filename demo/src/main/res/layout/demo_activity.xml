@@ -7,7 +7,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pappin.rufous.DemoActivity">
+    tools:context=".DemoActivity">
 
     <TextView
         android:id="@+id/message"

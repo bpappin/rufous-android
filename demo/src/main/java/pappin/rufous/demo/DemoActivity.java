@@ -1,4 +1,4 @@
-package pappin.rufous;
+package pappin.rufous.demo;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,7 +17,6 @@ import pappin.rufous.widget.fresco.MultiDraweeLetterTileDataSource;
 import pappin.rufous.widget.fresco.MultiDraweeView;
 
 public class DemoActivity extends AppCompatActivity {
-
 
     private BottomNavigationView navigation;
     private MultiDraweeView draweeGrid;
