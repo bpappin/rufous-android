@@ -3,7 +3,7 @@ package pappin.rufous.widget.fresco;
 import android.content.Context;
 import android.graphics.Rect;
 import android.support.annotation.DimenRes;
-import android.util.Log;
+import android.support.annotation.NonNull;
 
 import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
@@ -45,52 +45,86 @@ public class MiltiDraweeStackedLayoutManager extends MiltiDraweeAbstractLayoutMa
 
     @Override
     public Rect getDrawablePosition(MultiDraweeView multiDraweeView, MultiDraweeHolder<GenericDraweeHierarchy> multiDraweeHolder, int index) {
-        int offset = (int) dipToPixels(getContext().getResources().getDimension(imageOffset));
+        int offset = (int)dipToPixels(getContext()
+                                              .getResources()
+                                              .getDimension(imageOffset));
         int width = multiDraweeView.getMeasuredWidth();
         int height = multiDraweeView.getMeasuredHeight();
+        if (isRoundAsCircle()) {
+            return getRectForCircularDrawee(multiDraweeHolder, index, offset, width, height);
+        }
+        return getRectForSquareDrawee(multiDraweeHolder, index, offset, width, height);
 
+    }
+
+    private Rect getRectForSquareDrawee(MultiDraweeHolder<GenericDraweeHierarchy> multiDraweeHolder, int index, int offset, int width, int height) {
         if (multiDraweeHolder.size() == 1) {
             return new Rect(0, 0, width, height);
         } else if (multiDraweeHolder.size() == 2) {
             switch (index) {
                 case 0:
-                    return new Rect(offset, 0, width, height);
+                    return new Rect(0, 0, width - (offset * 2), height - (offset * 2));
                 case 1:
-                    return new Rect(0, offset, width, height);
+                    return new Rect(offset, offset, width - offset, height - offset);
             }
         } else if (multiDraweeHolder.size() == 3) {
             switch (index) {
                 case 0:
-                    return new Rect(offset * 2, 0, width, height);
+                    return new Rect(0, 0, width - (offset * 3), height - (offset * 3));
                 case 1:
-                    return new Rect(offset, offset, width, height);
+                    return new Rect(offset, offset, width - (offset * 2), height - (offset * 2));
                 case 2:
-                    return new Rect(0, offset * 2, width, height);
+                    return new Rect(offset * 2, offset * 2, width - offset, height - offset);
             }
         }
         if (multiDraweeHolder.size() == 4) {
-
-            int w = width - (offset * 4);
-            int h = height - (offset * 4);
-            Log.d(TAG, "count=" + multiDraweeHolder.size() + ", height=" + height + ", width=" + width + ", offset=" + offset);
-            Log.d(TAG, "h=" + h + ", w=" + w + ", offset=" + offset);
+            //            Log.d(TAG, "count=" + multiDraweeHolder.size() + ", height=" + height + ", width=" + width + ", offset=" + offset);
             switch (index) {
-//                case 0:
-//                    return new Rect(0, offset * 4, w, h);
-//                case 1:
-//                    return new Rect(offset, offset * 3, w, h);
-//                case 2:
-//                    return new Rect(offset * 2, offset * 2, w, h);
-//                case 3:
-//                    return new Rect(offset * 3, offset * 1, w, h);
                 case 0:
-                    return new Rect(offset * index, 0, width+(offset * index), height+(offset * index));
+                    return new Rect(0, 0, width - (offset * 4), height - (offset * 4));
                 case 1:
-                    return new Rect(offset * index, 0, width+(offset * index), height+(offset * index));
+                    return new Rect(offset, offset, width - (offset * 3), height - (offset * 3));
                 case 2:
-                    return new Rect(offset * index, 0, width+(offset * index), height+(offset * index));
+                    return new Rect(offset * 2, offset * 2, width - (offset * 2), height - (offset * 2));
                 case 3:
-                    return new Rect(offset * index, 0, width+(offset * index), height+(offset * index));
+                    return new Rect(offset * 3, offset * 3, width - offset, width - offset);
+            }
+        }
+        return new Rect(0, 0, width, height);
+    }
+
+    @NonNull
+    private Rect getRectForCircularDrawee(MultiDraweeHolder<GenericDraweeHierarchy> multiDraweeHolder, int index, int offset, int width, int height) {
+        if (multiDraweeHolder.size() == 1) {
+            return new Rect(0, 0, width, height);
+        } else if (multiDraweeHolder.size() == 2) {
+            switch (index) {
+                case 0:
+                    return new Rect(0, 0, width - offset, height);
+                case 1:
+                    return new Rect(offset, 0, width, height);
+            }
+        } else if (multiDraweeHolder.size() == 3) {
+            switch (index) {
+                case 0:
+                    return new Rect(0, 0, width - (offset * 2), height);
+                case 1:
+                    return new Rect(offset, 0, width - offset, height);
+                case 2:
+                    return new Rect(offset * 2, 0, width, height);
+            }
+        }
+        if (multiDraweeHolder.size() == 4) {
+            //            Log.d(TAG, "count=" + multiDraweeHolder.size() + ", height=" + height + ", width=" + width + ", offset=" + offset);
+            switch (index) {
+                case 0:
+                    return new Rect(0, 0, width - (offset * 3), height);
+                case 1:
+                    return new Rect(offset, 0, width - (offset * 2), height);
+                case 2:
+                    return new Rect(offset * 2, 0, width - (offset), height);
+                case 3:
+                    return new Rect(offset * 3, 0, width, height);
             }
         }
         return new Rect(0, 0, width, height);

@@ -66,9 +66,25 @@ public class DemoActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
 
 
-        final String[] imageUrls = {"http://lorempixel.com/400/200/people/One", "http://lorempixel.com/400/200/people/Two", "http://lorempixel.com/400/200/people/Three", null};
-        final String[] names = {"One Name", null, "Three Name", "Four Name"};
+        // XXX 4 images
+//        final String[] imageUrls = {"http://lorempixel.com/400/200/people/One", "http://lorempixel.com/400/200/people/Two", "http://lorempixel.com/400/200/people/Three", "http://lorempixel.com/400/200/people/Four"};
+//        final String[] names = {"One Name", "Two", "Three Name", "Four Name"};
+//        final String[][] letterData = {names, imageUrls};
+
+        // XXX 3 images
+        final String[] imageUrls = {"http://lorempixel.com/400/200/people/One", "http://lorempixel.com/400/200/people/Two", "http://lorempixel.com/400/200/people/Three"};
+        final String[] names = {"One Name", null, "Three Name"};
         final String[][] letterData = {names, imageUrls};
+
+        // XXX 2 images
+//        final String[] imageUrls = {"http://lorempixel.com/400/200/people/One", "http://lorempixel.com/400/200/people/Two"};
+//        final String[] names = {"One Name", "Three Name"};
+//        final String[][] letterData = {names, imageUrls};
+
+        // XXX 1 images
+//        final String[] imageUrls = {"http://lorempixel.com/400/200/people/One"};
+//        final String[] names = {"One Name"};
+//        final String[][] letterData = {names, imageUrls};
 
         final MultiDraweeBasicDataSource source1 = new MultiDraweeBasicDataSource(this, imageUrls);
         final MultiDraweeLetterTileDataSource source2 = new MultiDraweeLetterTileDataSource(this, letterData, true);
