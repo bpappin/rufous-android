@@ -1,4 +1,4 @@
-package pappin.rufous;
+package pappin.rufous.demo;
 
 import android.app.Application;
 

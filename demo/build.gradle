@@ -20,17 +20,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test:runner:1.+'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     testImplementation 'junit:junit:4.12'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 //    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:27.+'
     implementation 'com.android.support:design:27.+'
-    implementation 'com.android.support.constraint:constraint-layout:1.+'
+    implementation 'com.android.support.constraint:constraint-layout:+'
     implementation 'com.android.support:support-vector-drawable:27.+'
     implementation 'com.facebook.fresco:fresco:1.5.0'
     implementation 'com.facebook.fresco:animated-gif:1.0.0'
@@ -38,5 +42,5 @@ dependencies {
     implementation 'com.facebook.fresco:webpsupport:1.0.0'
     implementation 'com.facebook.fresco:imagepipeline-okhttp3:1.5.0'
     implementation 'com.facebook.fresco:imagepipeline:1.5.0'
-    compile project(path: ':rufous-widgets')
+    implementation project(path: ':rufous-widgets')
 }
