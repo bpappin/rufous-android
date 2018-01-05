@@ -9,7 +9,6 @@ import android.support.annotation.DimenRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import pappin.rufous.R;
 import pappin.rufous.util.LogUtil;
 
 /**
