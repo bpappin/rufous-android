@@ -11,6 +11,7 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.ArrayRes;
+import android.support.annotation.DimenRes;
 import android.text.TextPaint;
 import android.text.TextUtils;
 
@@ -102,17 +103,110 @@ public class LetterTileProvider {
         mPaint.setAntiAlias(true);
 
         //mColors = res.obtainTypedArray(R.array.tile_letter_colors);
+//        mTileLetterFontSize = res
+//                .getDimensionPixelSize(R.dimen.rufous_text_tile_letter_font_size);
         mTileLetterFontSize = res
-                .getDimensionPixelSize(R.dimen.rufous_text_tile_letter_font_size);
+                .getDimensionPixelSize(R.dimen.rufous_text_tile_letter_font_size_big);
+
 
         mDefaultBitmap = BitmapFactory.decodeResource(res,
-                                                      android.R.drawable.sym_def_app_icon);
+                android.R.drawable.sym_def_app_icon);
+    }
+
+    /**
+     * @param c The char to check
+     * @return True if <code>c</code> is in the English alphabet or is a digit, false otherwise
+     */
+    private static boolean isEnglishLetterOrDigit(char c) {
+        return 'A' <= c && c <= 'Z' || 'a' <= c && c <= 'z' || '0' <= c
+                && c <= '9';
+    }
+
+    public static final BitmapDrawable createSquareLetterTile(Context context, @ArrayRes int colourArrayResId,
+                                                              String displayName) {
+        return createSquareLetterTile(context, colourArrayResId, R.dimen.rufous_text_tile_letter_size, displayName);
+    }
+
+    public static final BitmapDrawable createSquareLetterTile(Context context, @ArrayRes int colourArrayResId, @DimenRes int tileSizeRes,
+                                                              String displayName) {
+        return createSquareLetterTile(context, colourArrayResId, tileSizeRes, displayName, displayName);
+    }
+
+    public static final BitmapDrawable createSquareLetterTile(Context context,
+                                                              String displayName) {
+        return createSquareLetterTile(context, displayName, displayName);
+    }
+
+    ///**
+    // * @param key
+    // *            The key used to generate the tile color
+    // * @return A new or previously chosen color for <code>key</code> used as the
+    // *         tile background color
+    // */
+    //private int pickColor(String key) {
+    //	// String.hashCode() is not supposed to change across java versions, so
+    //	// this should guarantee the same key always maps to the same color
+    //	final int color = Math.abs(key.hashCode()) % NUM_OF_TILE_COLORS;
+    //	try {
+    //		return mColors.getColor(color, Color.BLACK);
+    //	} finally {
+    //		mColors.recycle();
+    //	}
+    //}
+
+    public static final BitmapDrawable createSquareLetterTile(Context context,
+                                                              String displayName, String key) {
+        return createSquareLetterTile(context, R.array.rufous_text_tile_letter_colors, R.dimen.rufous_text_tile_letter_size_big, displayName, key);
+    }
+
+    public static final BitmapDrawable createSquareLetterTile(Context context, @ArrayRes int colourArrayResId, @DimenRes int tileSizeRes,
+                                                              String displayName, String key) {
+        final Resources res = context.getResources();
+        final int tileSize = res
+                .getDimensionPixelSize(tileSizeRes);
+
+        final LetterTileProvider tileProvider = new LetterTileProvider(context, colourArrayResId,
+                new BitmapFilter[0]);
+        final Bitmap letterTile = tileProvider.getLetterTile(displayName, key,
+                tileSize, tileSize);
+
+        BitmapDrawable icon = new BitmapDrawable(context.getResources(),
+                letterTile);
+        return icon;
+    }
+
+    public static final BitmapDrawable createRoundLetterTile(Context context, @ArrayRes int colourArrayResId, @DimenRes int tileSizeRes,
+                                                             String displayName) {
+        final Resources res = context.getResources();
+        final int tileSize = res
+                .getDimensionPixelSize(tileSizeRes);
+
+        final LetterTileProvider tileProvider = new LetterTileProvider(context, colourArrayResId,
+                new BitmapFilter() {
+
+                    @Override
+                    public Bitmap filter(Bitmap bitmap) {
+                        return BitmapUtil.getRoundedBitmap(bitmap);
+                    }
+
+                });
+        final Bitmap letterTile = tileProvider.getLetterTile(displayName,
+                displayName, tileSize, tileSize);
+
+        BitmapDrawable icon = new BitmapDrawable(context.getResources(),
+                letterTile);
+        return icon;
+    }
+
+    public static final BitmapDrawable createRoundLetterTile(Context context,
+                                                             String displayName) {
+        return createRoundLetterTile(context, R.array.rufous_text_tile_letter_colors, R.dimen.rufous_text_tile_letter_size_big, displayName);
     }
 
     public Bitmap getLetterTile(String displayName, String key, int width,
                                 int height) {
         return getLetterTile(displayName, key, 1, width,
-                             height);
+                height);
     }
 
     /**
@@ -126,7 +220,7 @@ public class LetterTileProvider {
     public Bitmap getLetterTile(String displayName, String key, int maxChars, int width,
                                 int height) {
         final Bitmap bitmap = Bitmap.createBitmap(width, height,
-                                                  Bitmap.Config.ARGB_8888);
+                Bitmap.Config.ARGB_8888);
 
         int endMax = maxChars;
         if (displayName.length() < endMax) {
@@ -175,92 +269,6 @@ public class LetterTileProvider {
             }
         }
         return output;
-    }
-
-    /**
-     * @param c The char to check
-     * @return True if <code>c</code> is in the English alphabet or is a digit, false otherwise
-     */
-    private static boolean isEnglishLetterOrDigit(char c) {
-        return 'A' <= c && c <= 'Z' || 'a' <= c && c <= 'z' || '0' <= c
-                && c <= '9';
-    }
-
-    ///**
-    // * @param key
-    // *            The key used to generate the tile color
-    // * @return A new or previously chosen color for <code>key</code> used as the
-    // *         tile background color
-    // */
-    //private int pickColor(String key) {
-    //	// String.hashCode() is not supposed to change across java versions, so
-    //	// this should guarantee the same key always maps to the same color
-    //	final int color = Math.abs(key.hashCode()) % NUM_OF_TILE_COLORS;
-    //	try {
-    //		return mColors.getColor(color, Color.BLACK);
-    //	} finally {
-    //		mColors.recycle();
-    //	}
-    //}
-
-    public static final BitmapDrawable createSquareLetterTile(Context context, @ArrayRes int colourArrayResId,
-                                                              String displayName) {
-        return createSquareLetterTile(context, colourArrayResId, displayName, displayName);
-    }
-
-    public static final BitmapDrawable createSquareLetterTile(Context context,
-                                                              String displayName) {
-        return createSquareLetterTile(context, displayName, displayName);
-    }
-
-    public static final BitmapDrawable createSquareLetterTile(Context context,
-                                                              String displayName, String key) {
-        return createSquareLetterTile(context, R.array.rufous_text_tile_letter_colors, displayName, key);
-    }
-
-    public static final BitmapDrawable createSquareLetterTile(Context context, @ArrayRes int colourArrayResId,
-                                                              String displayName, String key) {
-        final Resources res = context.getResources();
-        final int tileSize = res
-                .getDimensionPixelSize(R.dimen.rufous_text_tile_letter_size);
-
-        final LetterTileProvider tileProvider = new LetterTileProvider(context, colourArrayResId,
-                                                                       new BitmapFilter[0]);
-        final Bitmap letterTile = tileProvider.getLetterTile(displayName, key,
-                                                             tileSize, tileSize);
-
-        BitmapDrawable icon = new BitmapDrawable(context.getResources(),
-                                                 letterTile);
-        return icon;
-    }
-
-
-    public static final BitmapDrawable createRoundLetterTile(Context context, @ArrayRes int colourArrayResId,
-                                                             String displayName) {
-        final Resources res = context.getResources();
-        final int tileSize = res
-                .getDimensionPixelSize(R.dimen.rufous_text_tile_letter_size);
-
-        final LetterTileProvider tileProvider = new LetterTileProvider(context, colourArrayResId,
-                                                                       new BitmapFilter() {
-
-                                                                           @Override
-                                                                           public Bitmap filter(Bitmap bitmap) {
-                                                                               return BitmapUtil.getRoundedBitmap(bitmap);
-                                                                           }
-
-                                                                       });
-        final Bitmap letterTile = tileProvider.getLetterTile(displayName,
-                                                             displayName, tileSize, tileSize);
-
-        BitmapDrawable icon = new BitmapDrawable(context.getResources(),
-                                                 letterTile);
-        return icon;
-    }
-
-    public static final BitmapDrawable createRoundLetterTile(Context context,
-                                                             String displayName) {
-        return createRoundLetterTile(context, R.array.rufous_text_tile_letter_colors, displayName);
     }
 
 }

@@ -1,0 +1,8 @@
+<resources>
+    <style name="ClassicPickerDialogTheme" parent="Theme.AppCompat.Dialog">
+        <item name="colorPrimary">?attr/colorPrimary</item>
+        <item name="colorPrimaryDark">?attr/colorPrimaryDark</item>
+        <item name="colorAccent">?attr/colorAccent</item>
+    </style>
+
+</resources>
