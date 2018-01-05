@@ -12,13 +12,12 @@ import pappin.rufous.R;
  */
 
 public class MultiDraweeBasicDataSource implements MiltiDraweeDataSource {
-    private int placeholderImageRes = R.drawable.ic_placeholder_broken_image;
-    private int colourArrayResId;
+    private int placeholderImageRes = R.drawable.rufous_ic_placeholder_broken_image;
     private Context context;
     private String[] imageUrls = new String[0];
 
-    public MultiDraweeBasicDataSource(Context context, String[] imageNamesAndUrls) {
-        this(context, imageNamesAndUrls, R.drawable.ic_placeholder_broken_image);
+    public MultiDraweeBasicDataSource(Context context, String[] imageUrls) {
+        this(context, imageUrls, R.drawable.rufous_ic_placeholder_broken_image);
     }
 
     /**
@@ -31,7 +30,6 @@ public class MultiDraweeBasicDataSource implements MiltiDraweeDataSource {
         this.context = context;
         this.imageUrls = imageUrls;
         this.placeholderImageRes = placeholderImageRes;
-        this.colourArrayResId = R.array.rufous_text_tile_letter_colors;
     }
 
     @Override
@@ -48,11 +46,6 @@ public class MultiDraweeBasicDataSource implements MiltiDraweeDataSource {
     public int getImageCount() {
         return imageUrls.length;
     }
-
-//    @Override
-//    public String[] getImageUrls() {
-//        return imageNamesAndUrls[];
-//    }
 
     @Override
     public String getImageUrl(int i) {
