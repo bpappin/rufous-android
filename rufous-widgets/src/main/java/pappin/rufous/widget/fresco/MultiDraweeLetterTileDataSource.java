@@ -2,6 +2,7 @@ package pappin.rufous.widget.fresco;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.ArrayRes;
 import android.support.annotation.DrawableRes;
 import android.support.v7.content.res.AppCompatResources;
 
@@ -28,19 +29,23 @@ public class MultiDraweeLetterTileDataSource implements MiltiDraweeDataSource {
         this(context, imageNamesAndUrls, roundTile, R.drawable.ic_placeholder_person);
     }
 
+    public MultiDraweeLetterTileDataSource(Context context, String[][] imageNamesAndUrls, boolean roundTile, @DrawableRes int placeholderImageRes) {
+        this(context, imageNamesAndUrls, roundTile, placeholderImageRes, R.array.rufous_text_tile_letter_colors);
+    }
+
     /**
      * @param context             the application context the componetn is working in.
      * @param imageNamesAndUrls   an array of names and URLs, with the names at index 0 and the URLs at index 1, so that String[..] = {name, url}.
      * @param roundTile           draw the placeholder initials image as a round or square.
      * @param placeholderImageRes the default fallback placeholder image, if nothing can be generated.
      */
-    public MultiDraweeLetterTileDataSource(Context context, String[][] imageNamesAndUrls, boolean roundTile, @DrawableRes int placeholderImageRes) {
+    public MultiDraweeLetterTileDataSource(Context context, String[][] imageNamesAndUrls, boolean roundTile, @DrawableRes int placeholderImageRes, @ArrayRes int colourArrayResId) {
         super();
         this.context = context;
         this.imageNamesAndUrls = imageNamesAndUrls;
         this.roundTile = roundTile;
         this.placeholderImageRes = placeholderImageRes;
-        this.colourArrayResId = R.array.rufous_text_tile_letter_colors;
+        this.colourArrayResId = colourArrayResId;
     }
 
     @Override
