@@ -29,7 +29,7 @@ import pappin.rufous.util.StringUtil;
 public class MultiDraweeView extends View {
 
     public static final String TAG = LogUtil.tag("MultiDraweeView");
-    public static final boolean DBG = true;
+    public static final boolean DBG = false;
     private final MultiDraweeHolder<GenericDraweeHierarchy> mMultiDraweeHolder = new MultiDraweeHolder<>();
     private int mColumnCount = 1;
     private int mSpaceSize;
