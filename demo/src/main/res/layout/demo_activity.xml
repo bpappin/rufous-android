@@ -31,9 +31,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         fresco:actualImageScaleType="focusCrop"
-        fresco:placeholderImage="@drawable/ic_placeholder_broken_image"
+        fresco:placeholderImage="@drawable/rufous_ic_placeholder_broken_image"
         fresco:roundAsCircle="false"
-        fresco:srcCompat="@drawable/ic_placeholder_broken_image"/>
+        fresco:srcCompat="@drawable/rufous_ic_placeholder_broken_image"/>
 
     <pappin.rufous.widget.fresco.MultiDraweeView
         android:id="@+id/drawee_grid_circle"
@@ -45,9 +45,9 @@
         app:layout_constraintStart_toEndOf="@+id/drawee_grid_square"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         fresco:actualImageScaleType="focusCrop"
-        fresco:placeholderImage="@drawable/ic_placeholder_broken_image"
+        fresco:placeholderImage="@drawable/rufous_ic_placeholder_broken_image"
         fresco:roundAsCircle="true"
-        fresco:srcCompat="@drawable/ic_placeholder_broken_image"/>
+        fresco:srcCompat="@drawable/rufous_ic_placeholder_broken_image"/>
 
     <pappin.rufous.widget.fresco.MultiDraweeView
         android:id="@+id/drawee_piled_square"
@@ -59,9 +59,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3"
         fresco:actualImageScaleType="focusCrop"
-        fresco:placeholderImage="@drawable/ic_placeholder_broken_image"
+        fresco:placeholderImage="@drawable/rufous_ic_placeholder_broken_image"
         fresco:roundAsCircle="false"
-        fresco:srcCompat="@drawable/ic_placeholder_broken_image"/>
+        fresco:srcCompat="@drawable/rufous_ic_placeholder_broken_image"/>
 
     <pappin.rufous.widget.fresco.MultiDraweeView
         android:id="@+id/drawee_piled_circle"
@@ -73,9 +73,9 @@
         app:layout_constraintStart_toEndOf="@+id/drawee_piled_square"
         app:layout_constraintTop_toBottomOf="@+id/textView3"
         fresco:actualImageScaleType="focusCrop"
-        fresco:placeholderImage="@drawable/ic_placeholder_broken_image"
+        fresco:placeholderImage="@drawable/rufous_ic_placeholder_broken_image"
         fresco:roundAsCircle="true"
-        fresco:srcCompat="@drawable/ic_placeholder_broken_image"/>
+        fresco:srcCompat="@drawable/rufous_ic_placeholder_broken_image"/>
 
 
     <pappin.rufous.widget.fresco.MultiDraweeView
@@ -88,9 +88,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
         fresco:actualImageScaleType="focusCrop"
-        fresco:placeholderImage="@drawable/ic_placeholder_broken_image"
+        fresco:placeholderImage="@drawable/rufous_ic_placeholder_broken_image"
         fresco:roundAsCircle="true"
-        fresco:srcCompat="@drawable/ic_placeholder_broken_image"/>
+        fresco:srcCompat="@drawable/rufous_ic_placeholder_broken_image"/>
 
     <pappin.rufous.widget.fresco.MultiDraweeView
         android:id="@+id/drawee_stacked_circle"
@@ -102,9 +102,9 @@
         app:layout_constraintStart_toEndOf="@+id/drawee_stacked_square"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
         fresco:actualImageScaleType="focusCrop"
-        fresco:placeholderImage="@drawable/ic_placeholder_broken_image"
+        fresco:placeholderImage="@drawable/rufous_ic_placeholder_broken_image"
         fresco:roundAsCircle="true"
-        fresco:srcCompat="@drawable/ic_placeholder_broken_image"/>
+        fresco:srcCompat="@drawable/rufous_ic_placeholder_broken_image"/>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"

@@ -12,12 +12,12 @@ import pappin.rufous.R;
  */
 
 public class MultiDraweeBasicDataSource implements MiltiDraweeDataSource {
-    private int placeholderImageRes = R.drawable.ic_placeholder_broken_image;
+    private int placeholderImageRes = R.drawable.rufous_ic_placeholder_broken_image;
     private Context context;
     private String[] imageUrls = new String[0];
 
     public MultiDraweeBasicDataSource(Context context, String[] imageUrls) {
-        this(context, imageUrls, R.drawable.ic_placeholder_broken_image);
+        this(context, imageUrls, R.drawable.rufous_ic_placeholder_broken_image);
     }
 
     /**

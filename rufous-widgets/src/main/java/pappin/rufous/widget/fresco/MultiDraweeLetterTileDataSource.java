@@ -16,17 +16,17 @@ import pappin.rufous.util.StringUtil;
 
 public class MultiDraweeLetterTileDataSource implements MiltiDraweeDataSource {
     private final boolean roundTile;
-    private int placeholderImageRes = R.drawable.ic_placeholder_person;
+    private int placeholderImageRes = R.drawable.rufous_ic_placeholder_person;
     private int colourArrayResId;
     private Context context;
     private String[][] imageNamesAndUrls = new String[0][0];
 
     public MultiDraweeLetterTileDataSource(Context context, String[][] imageNamesAndUrls) {
-        this(context, imageNamesAndUrls, false, R.drawable.ic_placeholder_person);
+        this(context, imageNamesAndUrls, false, R.drawable.rufous_ic_placeholder_person);
     }
 
     public MultiDraweeLetterTileDataSource(Context context, String[][] imageNamesAndUrls, boolean roundTile) {
-        this(context, imageNamesAndUrls, roundTile, R.drawable.ic_placeholder_person);
+        this(context, imageNamesAndUrls, roundTile, R.drawable.rufous_ic_placeholder_person);
     }
 
     public MultiDraweeLetterTileDataSource(Context context, String[][] imageNamesAndUrls, boolean roundTile, @DrawableRes int placeholderImageRes) {
