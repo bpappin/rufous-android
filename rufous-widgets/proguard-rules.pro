@@ -25,3 +25,5 @@
 
 -dontwarn pappin.rufous.**
 
+-dontwarn com.github.davidmoten.**
+
