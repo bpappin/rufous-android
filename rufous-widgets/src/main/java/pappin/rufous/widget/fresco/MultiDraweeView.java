@@ -31,8 +31,8 @@ public class MultiDraweeView extends View {
     public static final String TAG = LogUtil.tag("MultiDraweeView");
     public static final boolean DBG = false;
     private final MultiDraweeHolder<GenericDraweeHierarchy> mMultiDraweeHolder = new MultiDraweeHolder<>();
-    private int mColumnCount = 1;
-    private int mSpaceSize;
+//    private int mColumnCount = 1;
+//    private int mSpaceSize;
     //    private List<String> mUris = new ArrayList<>();
 //    private String[] mUris = new String[0];
     private int drawnTimes;
@@ -58,7 +58,7 @@ public class MultiDraweeView extends View {
 
     private void init(Context context) {
         layoutManager = new MiltiDraweeTiledLayoutManager(context);
-        mSpaceSize = (int) dipToPixels(context, 3f);
+//        mSpaceSize = (int) dipToPixels(context, 3f);s
     }
 
 //    public void setImageUris(List<String> uris, @DrawableRes int placeholderResId) {
@@ -350,12 +350,12 @@ public class MultiDraweeView extends View {
 
     }
 
-    public float dipToPixels(Context context, float dipValue) {
-        DisplayMetrics metrics = context
-                .getResources()
-                .getDisplayMetrics();
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, metrics);
-    }
+//    public float dipToPixels(Context context, float dipValue) {
+//        DisplayMetrics metrics = context
+//                .getResources()
+//                .getDisplayMetrics();
+//        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, metrics);
+//    }
 
     public interface OnItemClickListener {
         void onPicClick(int picIndex, Rect itemRect);

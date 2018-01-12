@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package pappin.rufous.graphics;
+package pappin.rufous.widget.drawable;
 
 import android.annotation.TargetApi;
 import android.content.res.Resources;
@@ -30,30 +30,45 @@ import android.graphics.Typeface;
 import android.graphics.drawable.AdaptiveIconDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.ArrayRes;
 import android.text.TextUtils;
-
-
-//import com.google.common.base.Preconditions;
 
 import pappin.rufous.R;
 import pappin.rufous.android.Preconditions;
 
+//import com.google.common.base.Preconditions;
+
 /**
  * This originally came from the Contacts application in the Android open source code.
  * See: https://android.googlesource.com/platform/packages/apps/Contacts/
- *
+ * <p>
  * Apache License, Version 2.0 applies.
- *
+ * <p>
  * A drawable that encapsulates all the functionality needed to display a letter tile to
  * represent a contact image.
  */
 public class LetterTileDrawable extends Drawable {
 
-    private final String TAG = LetterTileDrawable.class.getSimpleName();
-
-    private final Paint mPaint;
-
-    /** Letter tile */
+    /**
+     * Contact type constants
+     */
+    public static final int TYPE_PERSON = 1;
+    public static final int TYPE_BUSINESS = 2;
+    public static final int TYPE_GROUP = 3;
+    public static final int TYPE_DEFAULT = TYPE_PERSON;
+    /**
+     * Reusable components to avoid new allocations
+     */
+    private static final Paint sPaint = new Paint();
+    private static final Rect sRect = new Rect();
+    private static final char[] sFirstChar = new char[1];
+    /**
+     * 54% opacity
+     */
+    private static final int ALPHA = 138;
+    /**
+     * Letter tile
+     */
     private static TypedArray sColors;
     private static int sDefaultColor;
     private static int sTileFontColor;
@@ -61,21 +76,8 @@ public class LetterTileDrawable extends Drawable {
     private static Bitmap DEFAULT_PERSON_AVATAR;
     private static Bitmap DEFAULT_BUSINESS_AVATAR;
     private static Bitmap DEFAULT_GROUP_AVATAR;
-
-    /** Reusable components to avoid new allocations */
-    private static final Paint sPaint = new Paint();
-    private static final Rect sRect = new Rect();
-    private static final char[] sFirstChar = new char[1];
-
-    /** Contact type constants */
-    public static final int TYPE_PERSON = 1;
-    public static final int TYPE_BUSINESS = 2;
-    public static final int TYPE_GROUP = 3;
-    public static final int TYPE_DEFAULT = TYPE_PERSON;
-
-    /** 54% opacity */
-    private static final int ALPHA = 138;
-
+    private final String TAG = LetterTileDrawable.class.getSimpleName();
+    private final Paint mPaint;
     private int mContactType = TYPE_DEFAULT;
     private float mScale = 1.0f;
     private float mOffset = 0.0f;
@@ -85,8 +87,12 @@ public class LetterTileDrawable extends Drawable {
     private Character mLetter = null;
 
     public LetterTileDrawable(final Resources res) {
+        this(res, R.array.rufous_letter_tile_colors);
+    }
+
+    public LetterTileDrawable(final Resources res, @ArrayRes int colourArrayId) {
         if (sColors == null) {
-            sColors = res.obtainTypedArray(R.array.rufous_letter_tile_colors);
+            sColors = res.obtainTypedArray(colourArrayId);
             sDefaultColor = res.getColor(R.color.rufous_letter_tile_default_color);
             sTileFontColor = res.getColor(R.color.rufous_letter_tile_font_color);
             sLetterToTileRatio = res.getFraction(R.fraction.rufous_letter_to_tile_ratio, 1, 1);
@@ -107,6 +113,31 @@ public class LetterTileDrawable extends Drawable {
         mColor = sDefaultColor;
     }
 
+    private static Bitmap getBitmapForContactType(int contactType) {
+        switch (contactType) {
+            case TYPE_PERSON:
+                return DEFAULT_PERSON_AVATAR;
+            case TYPE_BUSINESS:
+                return DEFAULT_BUSINESS_AVATAR;
+            case TYPE_GROUP:
+                return DEFAULT_GROUP_AVATAR;
+            default:
+                return DEFAULT_PERSON_AVATAR;
+        }
+    }
+
+    private static boolean isEnglishLetter(final char c) {
+        return ('A' <= c && c <= 'Z') || ('a' <= c && c <= 'z');
+    }
+
+    /**
+     * Returns the scale percentage as a float for LetterTileDrawables used in AdaptiveIcons.
+     */
+    @TargetApi(Build.VERSION_CODES.O)
+    public static float getAdaptiveIconScale() {
+        return 1 / (1 + (2 * AdaptiveIconDrawable.getExtraInsetFraction()));
+    }
+
     @Override
     public void draw(final Canvas canvas) {
         final Rect bounds = getBounds();
@@ -117,11 +148,26 @@ public class LetterTileDrawable extends Drawable {
         drawLetterTile(canvas);
     }
 
+    @Override
+    public void setAlpha(final int alpha) {
+        mPaint.setAlpha(alpha);
+    }
+
+    @Override
+    public void setColorFilter(final ColorFilter cf) {
+        mPaint.setColorFilter(cf);
+    }
+
+    @Override
+    public int getOpacity() {
+        return android.graphics.PixelFormat.OPAQUE;
+    }
+
     /**
      * Draw the bitmap onto the canvas at the current bounds taking into account the current scale.
      */
     private void drawBitmap(final Bitmap bitmap, final int width, final int height,
-            final Canvas canvas) {
+                            final Canvas canvas) {
         // The bitmap should be drawn in the middle of the canvas without changing its width to
         // height ratio.
         final Rect destRect = copyBounds();
@@ -188,6 +234,11 @@ public class LetterTileDrawable extends Drawable {
         return mColor;
     }
 
+    public LetterTileDrawable setColor(int color) {
+        mColor = color;
+        return this;
+    }
+
     /**
      * Returns a deterministic color based on the provided contact identifier string.
      */
@@ -202,43 +253,11 @@ public class LetterTileDrawable extends Drawable {
         return sColors.getColor(color, sDefaultColor);
     }
 
-    private static Bitmap getBitmapForContactType(int contactType) {
-        switch (contactType) {
-            case TYPE_PERSON:
-                return DEFAULT_PERSON_AVATAR;
-            case TYPE_BUSINESS:
-                return DEFAULT_BUSINESS_AVATAR;
-            case TYPE_GROUP:
-                return DEFAULT_GROUP_AVATAR;
-            default:
-                return DEFAULT_PERSON_AVATAR;
-        }
-    }
-
-    private static boolean isEnglishLetter(final char c) {
-        return ('A' <= c && c <= 'Z') || ('a' <= c && c <= 'z');
-    }
-
-    @Override
-    public void setAlpha(final int alpha) {
-        mPaint.setAlpha(alpha);
-    }
-
-    @Override
-    public void setColorFilter(final ColorFilter cf) {
-        mPaint.setColorFilter(cf);
-    }
-
-    @Override
-    public int getOpacity() {
-        return android.graphics.PixelFormat.OPAQUE;
-    }
-
     /**
      * Scale the drawn letter tile to a ratio of its default size
      *
      * @param scale The ratio the letter tile should be scaled to as a percentage of its default
-     * size, from a scale of 0 to 2.0f. The default is 1.0f.
+     *              size, from a scale of 0 to 2.0f. The default is 1.0f.
      */
     public LetterTileDrawable setScale(float scale) {
         mScale = scale;
@@ -249,13 +268,13 @@ public class LetterTileDrawable extends Drawable {
      * Assigns the vertical offset of the position of the letter tile to the ContactDrawable
      *
      * @param offset The provided offset must be within the range of -0.5f to 0.5f.
-     * If set to -0.5f, the letter will be shifted upwards by 0.5 times the height of the canvas
-     * it is being drawn on, which means it will be drawn with the center of the letter starting
-     * at the top edge of the canvas.
-     * If set to 0.5f, the letter will be shifted downwards by 0.5 times the height of the canvas
-     * it is being drawn on, which means it will be drawn with the center of the letter starting
-     * at the bottom edge of the canvas.
-     * The default is 0.0f.
+     *               If set to -0.5f, the letter will be shifted upwards by 0.5 times the height of the canvas
+     *               it is being drawn on, which means it will be drawn with the center of the letter starting
+     *               at the top edge of the canvas.
+     *               If set to 0.5f, the letter will be shifted downwards by 0.5 times the height of the canvas
+     *               it is being drawn on, which means it will be drawn with the center of the letter starting
+     *               at the bottom edge of the canvas.
+     *               The default is 0.0f.
      */
     public LetterTileDrawable setOffset(float offset) {
         Preconditions.checkArgument(offset >= -0.5f && offset <= 0.5f);
@@ -263,22 +282,17 @@ public class LetterTileDrawable extends Drawable {
         return this;
     }
 
-    public LetterTileDrawable setLetter(Character letter){
+    public LetterTileDrawable setLetter(Character letter) {
         mLetter = letter;
         return this;
     }
 
-    public LetterTileDrawable setColor(int color){
-        mColor = color;
-        return this;
-    }
-
     public LetterTileDrawable setLetterAndColorFromContactDetails(final String displayName,
-            final String identifier) {
+                                                                  final String identifier) {
         if (displayName != null && displayName.length() > 0
                 && isEnglishLetter(displayName.charAt(0))) {
             mLetter = Character.toUpperCase(displayName.charAt(0));
-        }else{
+        } else {
             mLetter = null;
         }
         mColor = pickColor(identifier);
@@ -293,13 +307,5 @@ public class LetterTileDrawable extends Drawable {
     public LetterTileDrawable setIsCircular(boolean isCircle) {
         mIsCircle = isCircle;
         return this;
-    }
-
-    /**
-     * Returns the scale percentage as a float for LetterTileDrawables used in AdaptiveIcons.
-     */
-    @TargetApi(Build.VERSION_CODES.O)
-    public static float getAdaptiveIconScale() {
-        return 1 / (1 + (2 * AdaptiveIconDrawable.getExtraInsetFraction()));
     }
 }
