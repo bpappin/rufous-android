@@ -1,12 +1,12 @@
 package pappin.rufous.helper;
 
 import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.widget.ImageView;
 
-import pappin.rufous.graphics.LetterTileProvider;
 import pappin.rufous.util.StringUtil;
+import pappin.rufous.widget.drawable.LetterTileDrawable;
 
 //import com.facebook.drawee.backends.pipeline.Fresco;
 //import com.facebook.drawee.interfaces.DraweeController;
@@ -50,12 +50,14 @@ public class ImageViewHelper {
 
     public static void setImageFromTile(Context context, ImageView view, String displayName, boolean round) {
         // XXX Drawee doesnt make it easy to set dynamic bitmap drawables.
-        BitmapDrawable letterTile = null;
+        Drawable letterTile = null;
+
         if (round) {
-            letterTile = LetterTileProvider.createRoundLetterTile(context, displayName);
+            letterTile = new LetterTileDrawable(context.getResources()).setIsCircular(true).setLetterAndColorFromContactDetails(displayName, displayName);
         } else {
-            letterTile = LetterTileProvider.createSquareLetterTile(context, displayName);
+            letterTile = new LetterTileDrawable(context.getResources()).setIsCircular(false).setLetterAndColorFromContactDetails(displayName, displayName);
         }
+
         view.setImageDrawable(letterTile);
     }
 

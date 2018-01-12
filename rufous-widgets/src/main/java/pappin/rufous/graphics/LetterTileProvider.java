@@ -43,7 +43,11 @@ import pappin.rufous.R;
  * </array>
  *
  * </pre>
+ *
+ * @deprecated this is very memory hungry, and can cause OOM exceptions. Use pappin.rufous.widget.drawable.LetterTileDrawable instead.
  */
+
+@Deprecated
 public class LetterTileProvider {
 
     /** The number of available tile colors (see R.array.letter_tile_colors) */
