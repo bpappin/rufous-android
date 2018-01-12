@@ -156,7 +156,7 @@ public class LetterTileProvider {
 
     public static final BitmapDrawable createSquareLetterTile(Context context,
                                                               String displayName, String key) {
-        return createSquareLetterTile(context, R.array.rufous_text_tile_letter_colors, R.dimen.rufous_text_tile_letter_size_big, displayName, key);
+        return createSquareLetterTile(context, R.array.rufous_letter_tile_colors, R.dimen.rufous_text_tile_letter_size_big, displayName, key);
     }
 
     public static final BitmapDrawable createSquareLetterTile(Context context, @ArrayRes int colourArrayResId, @DimenRes int tileSizeRes,
@@ -200,7 +200,7 @@ public class LetterTileProvider {
 
     public static final BitmapDrawable createRoundLetterTile(Context context,
                                                              String displayName) {
-        return createRoundLetterTile(context, R.array.rufous_text_tile_letter_colors, R.dimen.rufous_text_tile_letter_size_big, displayName);
+        return createRoundLetterTile(context, R.array.rufous_letter_tile_colors, R.dimen.rufous_text_tile_letter_size_big, displayName);
     }
 
     public Bitmap getLetterTile(String displayName, String key, int width,

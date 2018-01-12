@@ -7,7 +7,7 @@ import android.support.annotation.DrawableRes;
 import android.support.v7.content.res.AppCompatResources;
 
 import pappin.rufous.R;
-import pappin.rufous.graphics.LetterTileProvider;
+import pappin.rufous.widget.drawable.LetterTileDrawable;
 import pappin.rufous.util.StringUtil;
 
 /**
@@ -30,7 +30,7 @@ public class MultiDraweeLetterTileDataSource implements MiltiDraweeDataSource {
     }
 
     public MultiDraweeLetterTileDataSource(Context context, String[][] imageNamesAndUrls, boolean roundTile, @DrawableRes int placeholderImageRes) {
-        this(context, imageNamesAndUrls, roundTile, placeholderImageRes, R.array.rufous_text_tile_letter_colors);
+        this(context, imageNamesAndUrls, roundTile, placeholderImageRes, R.array.rufous_letter_tile_colors);
     }
 
     /**
@@ -59,9 +59,13 @@ public class MultiDraweeLetterTileDataSource implements MiltiDraweeDataSource {
             return AppCompatResources.getDrawable(context, getFallbackPlaceholderResource());
         }
         if (roundTile) {
-            return LetterTileProvider.createRoundLetterTile(context, colourArrayResId, R.dimen.rufous_text_tile_letter_size_big, imageNamesAndUrls[0][i]);
+            return new LetterTileDrawable(context.getResources(), colourArrayResId).setIsCircular(true).setLetterAndColorFromContactDetails(imageNamesAndUrls[0][i], imageNamesAndUrls[0][i]);
+//            return new LetterDrawable(context, colourArrayResId, R.dimen.rufous_text_tile_letter_font_size_big, imageNamesAndUrls[0][i], true);
+//            return LetterTileProvider.createRoundLetterTile(context, colourArrayResId, R.dimen.rufous_text_tile_letter_size_big, imageNamesAndUrls[0][i]);
         } else {
-            return LetterTileProvider.createSquareLetterTile(context, colourArrayResId, R.dimen.rufous_text_tile_letter_size_big, imageNamesAndUrls[0][i]);
+            return new LetterTileDrawable(context.getResources(), colourArrayResId).setIsCircular(false).setLetterAndColorFromContactDetails(imageNamesAndUrls[0][i], imageNamesAndUrls[0][i]);
+//            return new LetterDrawable(context, colourArrayResId, R.dimen.rufous_text_tile_letter_font_size_big, imageNamesAndUrls[0][i], false);
+//            return LetterTileProvider.createSquareLetterTile(context, colourArrayResId, R.dimen.rufous_text_tile_letter_size_big, imageNamesAndUrls[0][i]);
         }
     }
 
