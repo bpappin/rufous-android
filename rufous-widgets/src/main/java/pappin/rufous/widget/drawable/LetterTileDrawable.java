@@ -86,6 +86,11 @@ public class LetterTileDrawable extends Drawable {
     private int mColor;
     private Character mLetter = null;
 
+    private boolean borderEnabled;
+    private int borderColor;
+    private int borderStrokeWidth = 2;
+
+
     public LetterTileDrawable(final Resources res) {
         this(res, R.array.rufous_letter_tile_colors);
     }
@@ -111,6 +116,38 @@ public class LetterTileDrawable extends Drawable {
         mPaint.setFilterBitmap(true);
         mPaint.setDither(true);
         mColor = sDefaultColor;
+
+        borderEnabled = false;
+        borderColor = sTileFontColor;
+        borderStrokeWidth = 2;
+    }
+
+    public boolean isBorderEnabled() {
+        return borderEnabled;
+
+    }
+
+    public LetterTileDrawable setBorderEnabled(boolean borderEnabled) {
+        this.borderEnabled = borderEnabled;
+        return this;
+    }
+
+    public int getBorderColor() {
+        return borderColor;
+    }
+
+    public LetterTileDrawable setBorderColor(int borderColor) {
+        this.borderColor = borderColor;
+        return this;
+    }
+
+    public int getBorderStrokeWidth() {
+        return borderStrokeWidth;
+    }
+
+    public LetterTileDrawable setBorderStrokeWidth(int borderStrokeWidth) {
+        this.borderStrokeWidth = borderStrokeWidth;
+        return this;
     }
 
     private static Bitmap getBitmapForContactType(int contactType) {
@@ -198,11 +235,32 @@ public class LetterTileDrawable extends Drawable {
         final Rect bounds = getBounds();
         final int minDimension = Math.min(bounds.width(), bounds.height());
 
+        Paint.Style defaultStyle = sPaint.getStyle();
+        float defaultStrokeWidth = sPaint.getStrokeWidth();
+        int defaultColour = sPaint.getColor();
         if (mIsCircle) {
             canvas.drawCircle(bounds.centerX(), bounds.centerY(), minDimension / 2, sPaint);
+            if(borderEnabled) {
+                sPaint.setColor(borderColor);
+                sPaint.setStrokeWidth(borderStrokeWidth);
+                sPaint.setStyle(Paint.Style.STROKE);
+                canvas.drawCircle(bounds.centerX(), bounds.centerY(), minDimension / 2, sPaint);
+            }
+
         } else {
             canvas.drawRect(bounds, sPaint);
+
+            if(borderEnabled) {
+                sPaint.setColor(borderColor);
+                sPaint.setStrokeWidth(borderStrokeWidth);
+                sPaint.setStyle(Paint.Style.STROKE);
+                canvas.drawRect(bounds, sPaint);
+            }
         }
+// Reset back to defaults adter borders drawn.
+        sPaint.setStyle(defaultStyle);
+        sPaint.setStrokeWidth(defaultStrokeWidth);
+        sPaint.setColor(defaultColour);
 
         // Draw letter/digit only if the first character is an english letter or there's a override
 
