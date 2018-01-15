@@ -27,6 +27,9 @@ public class DemoActivity extends AppCompatActivity {
     private MultiDraweeView draweeStackedCircle;
     private MultiDraweeView draweeGridSquareEmpty;
     private MultiDraweeView draweeGridCircleEmpty;
+    private MultiDraweeView draweeStackedLetterSquareEmpty;
+    private MultiDraweeView draweeStackedLetterCircleEmpty;
+
     private TextView message;
     private OnNavigationItemSelectedListener onNavigationItemSelectedListener = new OnNavigationItemSelectedListener() {
 
@@ -68,9 +71,9 @@ public class DemoActivity extends AppCompatActivity {
 
 
         // XXX 4 images
-//        final String[] imageUrls = {"http://lorempixel.com/400/200/people/One", "http://lorempixel.com/400/200/people/Two", "http://lorempixel.com/400/200/people/Three", "http://lorempixel.com/400/200/people/Four"};
-//        final String[] names = {"One Name", "Two", "Three Name", "Four Name"};
-//        final String[][] letterData = {names, imageUrls};
+        //        final String[] imageUrls = {"http://lorempixel.com/400/200/people/One", "http://lorempixel.com/400/200/people/Two", "http://lorempixel.com/400/200/people/Three", "http://lorempixel.com/400/200/people/Four"};
+        //        final String[] names = {"One Name", "Two", "Three Name", "Four Name"};
+        //        final String[][] letterData = {names, imageUrls};
 
         // XXX 3 images
         final String[] imageUrls = {"http://lorempixel.com/400/200/people/One", "http://lorempixel.com/400/200/people/Two", "http://lorempixel.com/400/200/people/Three"};
@@ -82,18 +85,19 @@ public class DemoActivity extends AppCompatActivity {
         final String[][] letterData2 = {names2, imageUrls2};
 
         // XXX 2 images
-//        final String[] imageUrls = {"http://lorempixel.com/400/200/people/One", "http://lorempixel.com/400/200/people/Two"};
-//        final String[] names = {"One Name", "Three Name"};
-//        final String[][] letterData = {names, imageUrls};
+        //        final String[] imageUrls = {"http://lorempixel.com/400/200/people/One", "http://lorempixel.com/400/200/people/Two"};
+        //        final String[] names = {"One Name", "Three Name"};
+        //        final String[][] letterData = {names, imageUrls};
 
         // XXX 1 images
-//        final String[] imageUrls = {"http://lorempixel.com/400/200/people/One"};
-//        final String[] names = {"One Name"};
-//        final String[][] letterData = {names, imageUrls};
+        //        final String[] imageUrls = {"http://lorempixel.com/400/200/people/One"};
+        //        final String[] names = {"One Name"};
+        //        final String[][] letterData = {names, imageUrls};
 
         final MultiDraweeBasicDataSource source1 = new MultiDraweeBasicDataSource(this, imageUrls);
         final MultiDraweeLetterTileDataSource source2 = new MultiDraweeLetterTileDataSource(this, letterData, true);
-        final MultiDraweeLetterTileDataSource source3 = new MultiDraweeLetterTileDataSource(this, letterData2, true);
+        final MultiDraweeLetterTileDataSource source3 = new MultiDraweeLetterTileDataSource(this, letterData2);
+        final MultiDraweeLetterTileDataSource source4 = new MultiDraweeLetterTileDataSource(this, letterData2, true);
 
         draweeGrid = findViewById(R.id.drawee_grid_square);
         draweeGrid.setLayoutManager(new MiltiDraweeTiledLayoutManager(this));
@@ -105,36 +109,47 @@ public class DemoActivity extends AppCompatActivity {
 
 
         draweePiled = findViewById(R.id.drawee_piled_square);
-//        draweeStack.setBackgroundResource(R.color.cardview_dark_background);
+        //        draweeStack.setBackgroundResource(R.color.cardview_dark_background);
         draweePiled.setLayoutManager(new MiltiDraweePiledLayoutManager(this));
         draweePiled.setImageUris(source1);
 
         draweePiledCircle = findViewById(R.id.drawee_piled_circle);
-//        draweeStackCircle.setBackgroundResource(R.color.cardview_dark_background);
+        //        draweeStackCircle.setBackgroundResource(R.color.cardview_dark_background);
         draweePiledCircle.setLayoutManager(new MiltiDraweePiledLayoutManager(this, true));
         draweePiledCircle.setImageUris(source2);
 
 
         draweeStacked = findViewById(R.id.drawee_stacked_square);
-//        draweeStack.setBackgroundResource(R.color.cardview_dark_background);
+        //        draweeStack.setBackgroundResource(R.color.cardview_dark_background);
         draweeStacked.setLayoutManager(new MiltiDraweeStackedLayoutManager(this));
         draweeStacked.setImageUris(source1);
 
         draweeStackedCircle = findViewById(R.id.drawee_stacked_circle);
-//        draweeStackCircle.setBackgroundResource(R.color.cardview_dark_background);
+        //        draweeStackCircle.setBackgroundResource(R.color.cardview_dark_background);
         draweeStackedCircle.setLayoutManager(new MiltiDraweeStackedLayoutManager(this, true));
         draweeStackedCircle.setImageUris(source2);
 
 
         draweeGridSquareEmpty = findViewById(R.id.drawee_grid_square_empty);
-//        draweeStack.setBackgroundResource(R.color.cardview_dark_background);
+        //        draweeStack.setBackgroundResource(R.color.cardview_dark_background);
         draweeGridSquareEmpty.setLayoutManager(new MiltiDraweeTiledLayoutManager(this));
         draweeGridSquareEmpty.setImageUris(source3);
 
         draweeGridCircleEmpty = findViewById(R.id.drawee_grid_circle_empty);
-//        draweeStackCircle.setBackgroundResource(R.color.cardview_dark_background);
+        //        draweeStackCircle.setBackgroundResource(R.color.cardview_dark_background);
         draweeGridCircleEmpty.setLayoutManager(new MiltiDraweeTiledLayoutManager(this, true));
-        draweeGridCircleEmpty.setImageUris(source3);
+        draweeGridCircleEmpty.setImageUris(source4);
+
+
+        draweeStackedLetterSquareEmpty = findViewById(R.id.drawee_stacked_letter_square_empty);
+        //        draweeStack.setBackgroundResource(R.color.cardview_dark_background);
+        draweeStackedLetterSquareEmpty.setLayoutManager(new MiltiDraweeStackedLayoutManager(this));
+        draweeStackedLetterSquareEmpty.setImageUris(source3);
+
+        draweeStackedLetterCircleEmpty = findViewById(R.id.drawee_stacked_letter_circle_empty);
+        //        draweeStackCircle.setBackgroundResource(R.color.cardview_dark_background);
+        draweeStackedLetterCircleEmpty.setLayoutManager(new MiltiDraweeStackedLayoutManager(this, true));
+        draweeStackedLetterCircleEmpty.setImageUris(source4);
 
 
     }

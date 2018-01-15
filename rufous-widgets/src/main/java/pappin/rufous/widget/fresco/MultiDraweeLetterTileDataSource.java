@@ -7,8 +7,8 @@ import android.support.annotation.DrawableRes;
 import android.support.v7.content.res.AppCompatResources;
 
 import pappin.rufous.R;
-import pappin.rufous.widget.drawable.LetterTileDrawable;
 import pappin.rufous.util.StringUtil;
+import pappin.rufous.widget.drawable.LetterTileDrawable;
 
 /**
  * Created by bpappin on 2017-12-07.
@@ -35,9 +35,11 @@ public class MultiDraweeLetterTileDataSource implements MiltiDraweeDataSource {
 
     /**
      * @param context             the application context the componetn is working in.
-     * @param imageNamesAndUrls   an array of names and URLs, with the names at index 0 and the URLs at index 1, so that String[..] = {name, url}.
+     * @param imageNamesAndUrls   an array of names and URLs, with the names at index 0 and the URLs
+     *                            at index 1, so that String[..] = {name, url}.
      * @param roundTile           draw the placeholder initials image as a round or square.
-     * @param placeholderImageRes the default fallback placeholder image, if nothing can be generated.
+     * @param placeholderImageRes the default fallback placeholder image, if nothing can be
+     *                            generated.
      */
     public MultiDraweeLetterTileDataSource(Context context, String[][] imageNamesAndUrls, boolean roundTile, @DrawableRes int placeholderImageRes, @ArrayRes int colourArrayResId) {
         super();
@@ -59,13 +61,19 @@ public class MultiDraweeLetterTileDataSource implements MiltiDraweeDataSource {
             return AppCompatResources.getDrawable(context, getFallbackPlaceholderResource());
         }
         if (roundTile) {
-            return new LetterTileDrawable(context.getResources(), colourArrayResId).setIsCircular(true).setLetterAndColorFromContactDetails(imageNamesAndUrls[0][i], imageNamesAndUrls[0][i]);
-//            return new LetterDrawable(context, colourArrayResId, R.dimen.rufous_text_tile_letter_font_size_big, imageNamesAndUrls[0][i], true);
-//            return LetterTileProvider.createRoundLetterTile(context, colourArrayResId, R.dimen.rufous_text_tile_letter_size_big, imageNamesAndUrls[0][i]);
+            return new LetterTileDrawable(context.getResources(), colourArrayResId)
+                    .setBorderEnabled(imageNamesAndUrls.length > 1)
+                    .setIsCircular(true)
+                    .setLetterAndColorFromContactDetails(imageNamesAndUrls[0][i], imageNamesAndUrls[0][i]);
+            //            return new LetterDrawable(context, colourArrayResId, R.dimen.rufous_text_tile_letter_font_size_big, imageNamesAndUrls[0][i], true);
+            //            return LetterTileProvider.createRoundLetterTile(context, colourArrayResId, R.dimen.rufous_text_tile_letter_size_big, imageNamesAndUrls[0][i]);
         } else {
-            return new LetterTileDrawable(context.getResources(), colourArrayResId).setIsCircular(false).setLetterAndColorFromContactDetails(imageNamesAndUrls[0][i], imageNamesAndUrls[0][i]);
-//            return new LetterDrawable(context, colourArrayResId, R.dimen.rufous_text_tile_letter_font_size_big, imageNamesAndUrls[0][i], false);
-//            return LetterTileProvider.createSquareLetterTile(context, colourArrayResId, R.dimen.rufous_text_tile_letter_size_big, imageNamesAndUrls[0][i]);
+            return new LetterTileDrawable(context.getResources(), colourArrayResId)
+                    .setBorderEnabled(imageNamesAndUrls.length > 1)
+                    .setIsCircular(false)
+                    .setLetterAndColorFromContactDetails(imageNamesAndUrls[0][i], imageNamesAndUrls[0][i]);
+            //            return new LetterDrawable(context, colourArrayResId, R.dimen.rufous_text_tile_letter_font_size_big, imageNamesAndUrls[0][i], false);
+            //            return LetterTileProvider.createSquareLetterTile(context, colourArrayResId, R.dimen.rufous_text_tile_letter_size_big, imageNamesAndUrls[0][i]);
         }
     }
 
@@ -77,10 +85,10 @@ public class MultiDraweeLetterTileDataSource implements MiltiDraweeDataSource {
         return imageNamesAndUrls[0].length;
     }
 
-//    @Override
-//    public String[] getImageUrls() {
-//        return imageNamesAndUrls[];
-//    }
+    //    @Override
+    //    public String[] getImageUrls() {
+    //        return imageNamesAndUrls[];
+    //    }
 
     @Override
     public String getImageUrl(int i) {

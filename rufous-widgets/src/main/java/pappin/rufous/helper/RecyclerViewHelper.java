@@ -16,11 +16,11 @@ import pappin.rufous.widget.EmptyRecyclerView;
  */
 
 public class RecyclerViewHelper {
-    public static void linearLayout(Context context, EmptyRecyclerView list, boolean dividers) {
+    public static void linearLayout(Context context, RecyclerView list, boolean dividers) {
         linearLayout(context, list, LinearLayoutManager.VERTICAL, false, dividers, 0);
     }
 
-    public static void linearLayout(Context context, EmptyRecyclerView list, @RecyclerView.Orientation int orientation, boolean reverseLayout, boolean dividers, @DrawableRes int dividerDrawable) {
+    public static void linearLayout(Context context, RecyclerView list, @RecyclerView.Orientation int orientation, boolean reverseLayout, boolean dividers, @DrawableRes int dividerDrawable) {
         int scrollPosition = getScrollPosition(list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context, orientation, reverseLayout);
         list.setLayoutManager(layoutManager);
@@ -36,7 +36,7 @@ public class RecyclerViewHelper {
         list.scrollToPosition(scrollPosition);
     }
 
-    public static void gridLayout(Context context, EmptyRecyclerView list, int columnCount) {
+    public static void gridLayout(Context context, RecyclerView list, int columnCount) {
         int scrollPosition = getScrollPosition(list);
         final GridLayoutManager layoutManager = new GridLayoutManager(context, columnCount);
         list.setLayoutManager(layoutManager);
@@ -50,7 +50,7 @@ public class RecyclerViewHelper {
      * @param list        the list that the layout is going to apply to.
      * @param columnCount the number of columns for the layout.
      */
-    public static void staggeredGridLayout(Context context, EmptyRecyclerView list, int columnCount) {
+    public static void staggeredGridLayout(Context context, RecyclerView list, int columnCount) {
         staggeredGridLayout(context, list, columnCount, StaggeredGridLayoutManager.VERTICAL);
     }
 
@@ -60,7 +60,7 @@ public class RecyclerViewHelper {
      * @param columnCount the number of columns for the layout. if orientation is StaggeredGridLayoutManager.VERTICAL, the this is the number of rows.
      * @param orientation the @RecyclerView.Orientation of the grid. StaggeredGridLayoutManager.VERTICAL or StaggeredGridLayoutManager.HORIZONTAL.
      */
-    public static void staggeredGridLayout(Context context, EmptyRecyclerView list, int columnCount, @RecyclerView.Orientation int orientation) {
+    public static void staggeredGridLayout(Context context, RecyclerView list, int columnCount, @RecyclerView.Orientation int orientation) {
         int scrollPosition = getScrollPosition(list);
 
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(columnCount, orientation);
@@ -73,7 +73,7 @@ public class RecyclerViewHelper {
      * @param list
      * @return the current scroll position of the view.
      */
-    public static int getScrollPosition(EmptyRecyclerView list) {
+    public static int getScrollPosition(RecyclerView list) {
         // If a layout manager has already been set, get current scroll position.
         if (list.getLayoutManager() != null) {
             return ((LinearLayoutManager) list.getLayoutManager())
