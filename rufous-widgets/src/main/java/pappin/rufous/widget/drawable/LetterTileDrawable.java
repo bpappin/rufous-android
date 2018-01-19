@@ -31,6 +31,9 @@ import android.graphics.drawable.AdaptiveIconDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.ArrayRes;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.FractionRes;
 import android.text.TextUtils;
 
 import pappin.rufous.R;
@@ -48,6 +51,24 @@ import pappin.rufous.android.Preconditions;
  * represent a contact image.
  */
 public class LetterTileDrawable extends Drawable {
+
+    /**
+     * Default constants
+     */
+    @ColorRes
+    public static final int DEFAULT_TILE_COLOUR = R.color.rufous_letter_tile_default_color;
+    @ColorRes
+    public static final int DEFAULT_TEXT_COLOUR = R.color.rufous_letter_tile_font_color;
+    @FractionRes
+    public static final int DEFAULT_TILE_TEXT_RATIO = R.fraction.rufous_letter_to_tile_ratio;
+    @DrawableRes
+    public static final int DEFAULT_PLACEHOLDER_PERSON = R.drawable.rufous_ic_placeholder_person;
+    @DrawableRes
+    public static final int DEFAULT_PLACEHOLDER_ORGANIZATION = R.drawable.rufous_ic_placeholder_business;
+    @DrawableRes
+    public static final int DEFAULT_PLACEHOLDER_GROUP = R.drawable.rufous_ic_placeholder_people;
+    @ArrayRes
+    public static final int DEFAULT_LETTER_TILE_COLOURS = R.array.rufous_letter_tile_colors;
 
     /**
      * Contact type constants
@@ -92,21 +113,22 @@ public class LetterTileDrawable extends Drawable {
 
 
     public LetterTileDrawable(final Resources res) {
-        this(res, R.array.rufous_letter_tile_colors);
+        this(res, DEFAULT_LETTER_TILE_COLOURS);
     }
 
     public LetterTileDrawable(final Resources res, @ArrayRes int colourArrayId) {
+        this(res, DEFAULT_TILE_COLOUR, DEFAULT_TEXT_COLOUR, DEFAULT_TILE_TEXT_RATIO, DEFAULT_PLACEHOLDER_PERSON, DEFAULT_PLACEHOLDER_ORGANIZATION, DEFAULT_PLACEHOLDER_GROUP, colourArrayId);
+    }
+
+    public LetterTileDrawable(final Resources res, @ColorRes int defaultTileColour, @ColorRes int defaultFontColour, @FractionRes int letterToTileRatio, @DrawableRes int personDrawableResId, @DrawableRes int businessDrawableResId, @DrawableRes int groupDrawableResId, @ArrayRes int colourArrayId) {
         if (sColors == null) {
             sColors = res.obtainTypedArray(colourArrayId);
-            sDefaultColor = res.getColor(R.color.rufous_letter_tile_default_color);
-            sTileFontColor = res.getColor(R.color.rufous_letter_tile_font_color);
-            sLetterToTileRatio = res.getFraction(R.fraction.rufous_letter_to_tile_ratio, 1, 1);
-            DEFAULT_PERSON_AVATAR = BitmapFactory.decodeResource(res,
-                    R.drawable.rufous_ic_placeholder_person);
-            DEFAULT_BUSINESS_AVATAR = BitmapFactory.decodeResource(res,
-                    R.drawable.rufous_ic_placeholder_business);
-            DEFAULT_GROUP_AVATAR = BitmapFactory.decodeResource(res,
-                    R.drawable.rufous_ic_placeholder_people);
+            sDefaultColor = res.getColor(defaultTileColour);
+            sTileFontColor = res.getColor(defaultFontColour);
+            sLetterToTileRatio = res.getFraction(letterToTileRatio, 1, 1);
+            DEFAULT_PERSON_AVATAR = BitmapFactory.decodeResource(res, personDrawableResId);
+            DEFAULT_BUSINESS_AVATAR = BitmapFactory.decodeResource(res, businessDrawableResId);
+            DEFAULT_GROUP_AVATAR = BitmapFactory.decodeResource(res, groupDrawableResId);
             sPaint.setTypeface(Typeface.create(
                     res.getString(R.string.rufous_letter_tile_letter_font_family), Typeface.NORMAL));
             sPaint.setTextAlign(Align.CENTER);
@@ -210,12 +232,12 @@ public class LetterTileDrawable extends Drawable {
         final Rect destRect = copyBounds();
 
         // Crop the destination bounds into a square, scaled and offset as appropriate
-        final int halfLength = (int) (mScale * Math.min(destRect.width(), destRect.height()) / 2);
+        final int halfLength = (int)(mScale * Math.min(destRect.width(), destRect.height()) / 2);
 
         destRect.set(destRect.centerX() - halfLength,
-                (int) (destRect.centerY() - halfLength + mOffset * destRect.height()),
-                destRect.centerX() + halfLength,
-                (int) (destRect.centerY() + halfLength + mOffset * destRect.height()));
+                     (int)(destRect.centerY() - halfLength + mOffset * destRect.height()),
+                     destRect.centerX() + halfLength,
+                     (int)(destRect.centerY() + halfLength + mOffset * destRect.height()));
 
         // Source rectangle remains the entire bounds of the source bitmap.
         sRect.set(0, 0, width, height);
@@ -240,7 +262,7 @@ public class LetterTileDrawable extends Drawable {
         int defaultColour = sPaint.getColor();
         if (mIsCircle) {
             canvas.drawCircle(bounds.centerX(), bounds.centerY(), minDimension / 2, sPaint);
-            if(borderEnabled) {
+            if (borderEnabled) {
                 sPaint.setColor(borderColor);
                 sPaint.setStrokeWidth(borderStrokeWidth);
                 sPaint.setStyle(Paint.Style.STROKE);
@@ -250,14 +272,14 @@ public class LetterTileDrawable extends Drawable {
         } else {
             canvas.drawRect(bounds, sPaint);
 
-            if(borderEnabled) {
+            if (borderEnabled) {
                 sPaint.setColor(borderColor);
                 sPaint.setStrokeWidth(borderStrokeWidth);
                 sPaint.setStyle(Paint.Style.STROKE);
                 canvas.drawRect(bounds, sPaint);
             }
         }
-// Reset back to defaults adter borders drawn.
+        // Reset back to defaults adter borders drawn.
         sPaint.setStyle(defaultStyle);
         sPaint.setStrokeWidth(defaultStrokeWidth);
         sPaint.setColor(defaultColour);
@@ -278,13 +300,13 @@ public class LetterTileDrawable extends Drawable {
             // Draw the letter in the canvas, vertically shifted up or down by the user-defined
             // offset
             canvas.drawText(sFirstChar, 0, 1, bounds.centerX(),
-                    bounds.centerY() + mOffset * bounds.height() - sRect.exactCenterY(),
-                    sPaint);
+                            bounds.centerY() + mOffset * bounds.height() - sRect.exactCenterY(),
+                            sPaint);
         } else {
             // Draw the default image if there is no letter/digit to be drawn
             final Bitmap bitmap = getBitmapForContactType(mContactType);
             drawBitmap(bitmap, bitmap.getWidth(), bitmap.getHeight(),
-                    canvas);
+                       canvas);
         }
     }
 
@@ -325,14 +347,13 @@ public class LetterTileDrawable extends Drawable {
     /**
      * Assigns the vertical offset of the position of the letter tile to the ContactDrawable
      *
-     * @param offset The provided offset must be within the range of -0.5f to 0.5f.
-     *               If set to -0.5f, the letter will be shifted upwards by 0.5 times the height of the canvas
-     *               it is being drawn on, which means it will be drawn with the center of the letter starting
-     *               at the top edge of the canvas.
-     *               If set to 0.5f, the letter will be shifted downwards by 0.5 times the height of the canvas
-     *               it is being drawn on, which means it will be drawn with the center of the letter starting
-     *               at the bottom edge of the canvas.
-     *               The default is 0.0f.
+     * @param offset The provided offset must be within the range of -0.5f to 0.5f. If set to -0.5f,
+     *               the letter will be shifted upwards by 0.5 times the height of the canvas it is
+     *               being drawn on, which means it will be drawn with the center of the letter
+     *               starting at the top edge of the canvas. If set to 0.5f, the letter will be
+     *               shifted downwards by 0.5 times the height of the canvas it is being drawn on,
+     *               which means it will be drawn with the center of the letter starting at the
+     *               bottom edge of the canvas. The default is 0.0f.
      */
     public LetterTileDrawable setOffset(float offset) {
         Preconditions.checkArgument(offset >= -0.5f && offset <= 0.5f);
