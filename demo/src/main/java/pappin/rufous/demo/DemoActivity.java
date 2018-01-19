@@ -7,6 +7,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.BottomNavigationView.OnNavigationItemSelectedListener;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import pappin.rufous.widget.fresco.MiltiDraweePiledLayoutManager;
@@ -29,6 +30,8 @@ public class DemoActivity extends AppCompatActivity {
     private MultiDraweeView draweeGridCircleEmpty;
     private MultiDraweeView draweeStackedLetterSquareEmpty;
     private MultiDraweeView draweeStackedLetterCircleEmpty;
+    private MultiDraweeView draweeGridSquareLimited;
+    private MultiDraweeView draweeGridCircleLimited;
 
     private TextView message;
     private OnNavigationItemSelectedListener onNavigationItemSelectedListener = new OnNavigationItemSelectedListener() {
@@ -57,6 +60,7 @@ public class DemoActivity extends AppCompatActivity {
             return false;
         }
     };
+
 
 
     @Override
@@ -150,6 +154,17 @@ public class DemoActivity extends AppCompatActivity {
         //        draweeStackCircle.setBackgroundResource(R.color.cardview_dark_background);
         draweeStackedLetterCircleEmpty.setLayoutManager(new MiltiDraweeStackedLayoutManager(this, true));
         draweeStackedLetterCircleEmpty.setImageUris(source4);
+
+
+        draweeGridSquareLimited = findViewById(R.id.drawee_grid_square_limited);
+        //        draweeStack.setBackgroundResource(R.color.cardview_dark_background);
+        draweeGridSquareLimited.setLayoutManager(new MiltiDraweeStackedLayoutManager(this));
+        draweeGridSquareLimited.setImageUris(source3);
+
+        draweeGridCircleLimited = findViewById(R.id.drawee_grid_circle_limited);
+        //        draweeStackCircle.setBackgroundResource(R.color.cardview_dark_background);
+        draweeGridCircleLimited.setLayoutManager(new MiltiDraweeStackedLayoutManager(this, true));
+        draweeGridCircleLimited.setImageUris(source4);
 
 
     }
