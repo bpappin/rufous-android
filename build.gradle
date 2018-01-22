@@ -48,8 +48,8 @@ ext {
     siteUrl = 'https://github.com/bpappin/rufous-android'
     gitUrl = 'https://github.com/bpappin/rufous-android.git'
 
-    libraryVersion = '1.0.10'
-    libraryCode = 1010
+    libraryVersion = '1.0.11'
+    libraryCode = 1011
 
     developerId = 'bpappin'
     developerName = 'Brill pappin'
