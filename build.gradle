@@ -27,6 +27,7 @@ allprojects {
     tasks.withType(Javadoc) {
         options.addStringOption('Xdoclint:none', '-quiet')
         options.addStringOption('encoding', 'UTF-8')
+        failOnError false
     }
 
 //    apply plugin: 'com.github.dcendents.android-maven'
