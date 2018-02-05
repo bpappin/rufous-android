@@ -55,6 +55,30 @@ public class GeohashUtil {
     }
 
     /**
+     * Construct a geohash using the double values for latitude and longitude, and the precision
+     * specificied.
+     *
+     * @param latitude
+     * @param longitude
+     * @param precision
+     * @return
+     */
+    public static String fromDoubles(double latitude, double longitude, int precision) {
+        return GeoHash.encodeHash(latitude, longitude, precision);
+    }
+
+    /**
+     * Same as #fromDouble(long, long, int), but using MAX_PRECISION.
+     *
+     * @param latitude
+     * @param longitude
+     * @return
+     */
+    public static String fromDoubles(double latitude, double longitude) {
+        return GeoHash.encodeHash(latitude, longitude, MAX_PRECISION);
+    }
+
+    /**
      * tests is the given location is bounded by the given hash.
      *
      * @param location
