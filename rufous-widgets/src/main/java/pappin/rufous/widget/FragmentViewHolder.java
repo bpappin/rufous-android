@@ -37,52 +37,69 @@ public abstract class FragmentViewHolder<T> {
      */
     protected abstract void onBind(T source);
 
+    /**
+     * Allow the view holder to reset it's components.
+     * <p>
+     * This will be called automaticaly if swapCursor(T) is passed a null cursor.
+     */
+    protected void onReset() {
+        // Defaults to noop.
+        return;
+    }
+
+    /**
+     * Note: calls onReset() is the source is null.
+     *
+     * @param source
+     */
     public void swapCursor(T source) {
         if (source != null) {
-            if (source instanceof Cursor && ((Cursor) source).moveToFirst()) {
+            if (source instanceof Cursor && ((Cursor)source).moveToFirst()) {
                 onBind(source);
             } else {
                 onBind(source);
             }
+        } else {
+            onReset();
         }
 
     }
 
 
-//    protected ToggleGroup findToggleGroup(@IdRes int resId) {
-//        return (ToggleGroup)getRoot().findViewById(resId);
-//    }
-//
-//    public ToggleButton findToggleGroupButton(@IdRes int resId) {
-//        return (ToggleButton)getRoot().findViewById(resId);
-//    }
+    //    protected ToggleGroup findToggleGroup(@IdRes int resId) {
+    //        return (ToggleGroup)getRoot().findViewById(resId);
+    //    }
+    //
+    //    public ToggleButton findToggleGroupButton(@IdRes int resId) {
+    //        return (ToggleButton)getRoot().findViewById(resId);
+    //    }
 
     protected EditText findEditText(@IdRes int resId) {
-        return (EditText) getRoot().findViewById(resId);
+        return (EditText)getRoot().findViewById(resId);
     }
 
     protected TextView findTextView(@IdRes int resId) {
-        return (TextView) getRoot().findViewById(resId);
+        return (TextView)getRoot().findViewById(resId);
     }
 
-//    protected SimpleDraweeView findDraweeView(@IdRes int resId) {
-//        return (SimpleDraweeView)getRoot().findViewById(resId);
-//    }
+    //    protected SimpleDraweeView findDraweeView(@IdRes int resId) {
+    //        return (SimpleDraweeView)getRoot().findViewById(resId);
+    //    }
 
     protected ImageView findImageView(@IdRes int resId) {
-        return (ImageView) getRoot().findViewById(resId);
+        return (ImageView)getRoot().findViewById(resId);
     }
 
 
     protected FloatingActionButton findFab(@IdRes int resId) {
-        return (FloatingActionButton) getRoot().findViewById(resId);
+        return (FloatingActionButton)getRoot().findViewById(resId);
     }
 
     protected Button findButton(@IdRes int resId) {
-        return (Button) getRoot().findViewById(resId);
+        return (Button)getRoot().findViewById(resId);
     }
 
     protected Switch findSwitch(@IdRes int resId) {
-        return (Switch) getRoot().findViewById(resId);
+        return (Switch)getRoot().findViewById(resId);
     }
 }
