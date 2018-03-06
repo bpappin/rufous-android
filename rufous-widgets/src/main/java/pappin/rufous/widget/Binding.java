@@ -36,6 +36,40 @@ public class Binding {
         }
     }
 
+    /**
+     * Bind the field to the component, using a default resource id, if the value is empty.
+     *
+     * @param view
+     * @param field
+     * @param cursor
+     * @param defaultResId
+     */
+    public static void bind(TextView view, String field, Cursor cursor, @StringRes int defaultResId) {
+        if (!cursor.isNull(cursor.getColumnIndex(field))) {
+            final String value = cursor.getString(cursor.getColumnIndex(field));
+            if (StringUtil.isNotEmpty(value)) {
+                view.setText(value);
+            } else {
+                view.setText(defaultResId);
+            }
+        } else {
+            view.setText(defaultResId);
+        }
+    }
+
+    public static void bind(TextView view, String field, Cursor cursor, String defaultLabel) {
+        if (!cursor.isNull(cursor.getColumnIndex(field))) {
+            final String value = cursor.getString(cursor.getColumnIndex(field));
+            if (StringUtil.isNotEmpty(value)) {
+                view.setText(value);
+            } else {
+                view.setText(defaultLabel);
+            }
+        } else {
+            view.setText(defaultLabel);
+        }
+    }
+
 
     public static void bindOrLetterTile(Context context, ImageView view, String urlColumn, String nameColumn, Cursor cursor) {
         ImageViewHelper.setImageOrDefaultRound(context, view, string(urlColumn, cursor), string(nameColumn, cursor));
@@ -108,8 +142,8 @@ public class Binding {
         }
 
         view.setText(context
-                .getResources()
-                .getString(resId, args));
+                             .getResources()
+                             .getString(resId, args));
     }
 
     /**
@@ -135,8 +169,8 @@ public class Binding {
         }
         if (allVisible) {
             view.setText(context
-                    .getResources()
-                    .getString(resId, args));
+                                 .getResources()
+                                 .getString(resId, args));
         } else {
             view.setVisibility(visibility);
         }
@@ -148,8 +182,8 @@ public class Binding {
 
     public static void bindFormat(Context context, TextView view, @StringRes int resId, String[] args) {
         view.setText(context
-                .getResources()
-                .getString(resId, (Object[]) args));
+                             .getResources()
+                             .getString(resId, (Object[])args));
     }
 
     public static void bindString(TextView view, String value) {
