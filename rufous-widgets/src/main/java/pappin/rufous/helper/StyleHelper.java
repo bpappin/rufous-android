@@ -2,6 +2,7 @@ package pappin.rufous.helper;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
@@ -9,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
+import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.IdRes;
@@ -16,6 +18,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -29,6 +32,32 @@ import pappin.rufous.graphics.ColourUtil;
  * Created by bpappin on 16-07-29.
  */
 public class StyleHelper {
+
+
+    public static @ColorInt
+    int getTextColorPrimary(Context context) {
+        return getColourFromAttribute(context, android.R.attr.textColorPrimary);
+    }
+
+    public static @ColorInt
+    int getTextColorSecondary(Context context) {
+        return getColourFromAttribute(context, android.R.attr.textColorSecondary);
+    }
+
+    public static @ColorInt
+    int getTextColorTertiary(Context context) {
+        return getColourFromAttribute(context, android.R.attr.textColorTertiary);
+    }
+
+    public static @ColorInt
+    int getColourFromAttribute(Context context, @AttrRes int attr) {
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+        theme.resolveAttribute(attr, typedValue, true);
+        @ColorInt int color = typedValue.data;
+        return color;
+    }
+
     public static void legacyTint(int color, Drawable drawable) {
         if (drawable != null) {
             // If we don't mutate the drawable, then all drawable's with this id will have a color

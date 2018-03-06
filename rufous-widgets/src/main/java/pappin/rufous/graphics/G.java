@@ -16,6 +16,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.ArrayRes;
+import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.v7.graphics.Palette;
 import android.view.MenuItem;
@@ -269,8 +270,55 @@ public class G {
         return overlay;
     }
 
+    /**
+     * Converts the input colour into it's complimentary colour.
+     *
+     * @param colour
+     * @return
+     */
     public static int complimentaryColour(int colour) {
         // XXX https://stackoverflow.com/questions/407793/programmatically-choose-high-contrast-colors
         return ~colour;
+    }
+
+    /**
+     * Returns a colour best suited to contrast with the input colour.
+     * <p>
+     * The alpha value will be included.
+     *
+     * @param colour the colour to start with.
+     * @return
+     */
+    @ColorInt
+    public static int contrastingColour(@ColorInt int colour) {
+        return contrastingColour(colour, true);
+    }
+
+    /**
+     * Returns a colour best suited to contrast with the input colour.
+     *
+     * @param colour       the colour to start with.
+     * @param includeAlpha should the alpha value be included.
+     * @return
+     */
+    @ColorInt
+    public static int contrastingColour(@ColorInt int colour, boolean includeAlpha) {
+        // XXX https://stackoverflow.com/questions/1855884/determine-font-color-based-on-background-color
+
+        // Counting the perceptive luminance - human eye favors green color...
+        double a = 1 - (0.299 * Color.red(colour) + 0.587 * Color.green(colour) + 0.114 * Color.blue(colour)) / 255;
+
+
+        int d = 0; // bright colours - black font;
+        if (a >= 0.5) {
+            d = 255; // dark colours - white font
+        }
+
+        if (includeAlpha) {
+            int alpha = Color.alpha(colour);
+            return Color.argb(alpha, d, d, d);
+        }
+
+        return Color.rgb(d, d, d);
     }
 }
