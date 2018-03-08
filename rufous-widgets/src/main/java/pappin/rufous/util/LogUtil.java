@@ -1,9 +1,13 @@
 package pappin.rufous.util;
 
+import android.os.Bundle;
 import android.util.Log;
+import android.util.StringBuilderPrinter;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.util.Set;
 
 /**
  * Created by bpappin on 2017-01-16.
@@ -36,6 +40,25 @@ public class LogUtil {
     }
 
     public static void dump(String tag, String prefix, Object entity) {
-        Log.d(tag, prefix + gson.toJson(entity));
+        if (entity instanceof Bundle) {
+            Log.d(tag, prefix + " the " + entity.getClass().getName() + " can't be serialized into JSON.");
+        } else {
+            Log.d(tag, prefix + gson.toJson(entity));
+        }
+    }
+
+    public static void dump(String tag, Bundle bundle) {
+        dump(tag, ">>>> BUNDLE: ", bundle);
+    }
+
+    public static void dump(String tag, String prefix, Bundle bundle) {
+        final StringBuilder buffer = new StringBuilder(" Bundle {");
+        StringBuilderPrinter printer = new StringBuilderPrinter(buffer);
+        Set<String> keys = bundle.keySet();
+        for (String key : keys) {
+            printer.println("  - " + key + "=" + bundle.get(key));
+        }
+        printer.println("}");
+        Log.d(tag, prefix + buffer.toString());
     }
 }
