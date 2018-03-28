@@ -36,25 +36,13 @@ public abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHold
         return context;
     }
 
-    @Override
-    public int getItemCount() {
-        if (dataValid && cursor != null) {
-            return cursor.getCount();
-        }
-        return 0;
-    }
-
-    @Override
-    public long getItemId(int position) {
-        if (dataValid && cursor != null && cursor.moveToPosition(position)) {
-            return cursor.getLong(rowIdColumn);
-        }
-        return 0;
-    }
-
-    @Override
-    public void setHasStableIds(boolean hasStableIds) {
-        super.setHasStableIds(true);
+    /**
+     * @param position
+     * @param cursor
+     * @return
+     */
+    public int getItemViewType(int position, Cursor cursor) {
+        return super.getItemViewType(position);
     }
 
     public abstract void onBindViewHolder(VH viewHolder, Cursor cursor);
@@ -68,6 +56,50 @@ public abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHold
             throw new IllegalStateException("couldn't move cursor to position " + position);
         }
         onBindViewHolder(viewHolder, cursor);
+    }
+
+    /**
+     * Return the view type of the item at <code>position</code> for the purposes
+     * of view recycling.
+     * <p>
+     * <p>The default implementation of this method returns 0, making the assumption of
+     * a single view type for the adapter. Unlike ListView adapters, types need not
+     * be contiguous. Consider using id resources to uniquely identify item view types.
+     *
+     * @param position position to query
+     * @return integer value identifying the type of the view needed to represent the item at
+     * <code>position</code>. Type codes need not be contiguous.
+     */
+    @Override
+    public int getItemViewType(int position) {
+        if (!dataValid) {
+            throw new IllegalStateException("this should only be called when the cursor is valid");
+        }
+        if (!cursor.moveToPosition(position)) {
+            throw new IllegalStateException("couldn't move cursor to position " + position);
+        }
+        return getItemViewType(position, cursor);
+    }
+
+    @Override
+    public void setHasStableIds(boolean hasStableIds) {
+        super.setHasStableIds(true);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        if (dataValid && cursor != null && cursor.moveToPosition(position)) {
+            return cursor.getLong(rowIdColumn);
+        }
+        return 0;
+    }
+
+    @Override
+    public int getItemCount() {
+        if (dataValid && cursor != null) {
+            return cursor.getCount();
+        }
+        return 0;
     }
 
     /**
