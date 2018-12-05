@@ -55,14 +55,32 @@ public class StringUtil {
     }
 
     public static String join(String[] data, String separator) {
+        if (data == null) return "";
+
         StringBuilder buff = new StringBuilder();
         for (int i = 0; i < data.length; i++) {
-            buff.append(data[i]);
-            if (i < data.length - 1) {
-                buff.append(separator);
+            String dataValue = data[i];
+            if (dataValue != null && !isDataASeparator(dataValue, separator)) {
+                buff.append(dataValue);
+                if (i < data.length - 1 && lastCharacterNotSeparator(dataValue, separator)) {
+                    buff.append(separator);
+                }
             }
         }
         return buff.toString();
+    }
+
+    private static boolean lastCharacterNotSeparator(String dataValue, String separator) {
+       if (dataValue.isEmpty()) return false;
+       String lastChar = String.valueOf(
+               dataValue.charAt(dataValue.length()-1)
+       );
+       return !(lastChar.equals(separator));
+    }
+
+    private static boolean isDataASeparator(String dataValue, String separator) {
+        String trimmedData = dataValue.trim();
+        return trimmedData.startsWith(separator) && trimmedData.endsWith(separator);
     }
 
     public static String orDefault(String value, String alt) {
