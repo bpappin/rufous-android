@@ -124,6 +124,26 @@ public class Binding {
         return string;
     }
 
+    /**
+     * Binds one or more fields, via a formatted string, into a TextView.
+     *
+     * @param context
+     * @param view
+     * @param resId
+     * @param fields
+     * @param cursor
+     */
+    public static void bindFormat(Context context, TextView view, @StringRes int resId, String emptyValue, String[] fields, Cursor cursor) {
+
+        Object[] args = new Object[fields.length];
+        for (int i = 0; i < fields.length; i++) {
+            args[i] = StringUtil.orString(Binding.string(fields[i], cursor), emptyValue);
+        }
+
+        view.setText(context
+                .getResources()
+                .getString(resId, args));
+    }
 
     /**
      * Binds one or more fields, via a formatted string, into a TextView.
@@ -142,8 +162,8 @@ public class Binding {
         }
 
         view.setText(context
-                             .getResources()
-                             .getString(resId, args));
+                .getResources()
+                .getString(resId, args));
     }
 
     /**
@@ -169,8 +189,8 @@ public class Binding {
         }
         if (allVisible) {
             view.setText(context
-                                 .getResources()
-                                 .getString(resId, args));
+                    .getResources()
+                    .getString(resId, args));
         } else {
             view.setVisibility(visibility);
         }
@@ -182,8 +202,8 @@ public class Binding {
 
     public static void bindFormat(Context context, TextView view, @StringRes int resId, String[] args) {
         view.setText(context
-                             .getResources()
-                             .getString(resId, (Object[])args));
+                .getResources()
+                .getString(resId, (Object[])args));
     }
 
     public static void bindString(TextView view, String value) {
