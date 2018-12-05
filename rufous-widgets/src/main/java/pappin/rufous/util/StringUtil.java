@@ -79,8 +79,8 @@ public class StringUtil {
     }
 
     private static boolean isDataASeparator(String dataValue, String separator) {
-        String trimmedData = dataValue.trim();
-        return trimmedData.startsWith(separator) && trimmedData.endsWith(separator);
+        String replaced = dataValue.replaceAll("["+separator+"]", "");
+        return replaced.trim().length() == 0;
     }
 
     public static String orDefault(String value, String alt) {

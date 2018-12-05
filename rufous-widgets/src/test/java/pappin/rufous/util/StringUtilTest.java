@@ -24,7 +24,7 @@ public class StringUtilTest {
 
         values = null;
         result = StringUtil.join(values, separator);
-        assertEquals(result, "");
+        assertEquals("", result);
     }
 
     @Test
@@ -32,7 +32,7 @@ public class StringUtilTest {
         values = new String[] {"xxxx", "", "zzzz"};
         joinedValues = "xxxx|zzzz";
         String result = StringUtil.join(values, separator);
-        assertEquals(result, joinedValues);
+        assertEquals(joinedValues, result);
     }
 
     @Test
@@ -74,6 +74,15 @@ public class StringUtilTest {
     public void join_whenValuesAreMixed_shouldFormatOnlyRawValues() {
         values = new String[] {"xxxx|", "99999", "xyxyx"};
         joinedValues = "xxxx|99999|xyxyx";
+
+        String result = StringUtil.join(values, separator);
+        assertEquals(joinedValues, result);
+    }
+
+    @Test
+    public void join_whenAddingANewValue_shouldAddNewValueAtTheEnd() {
+        values = new String[] {"xxx|zzz|yyy", "1111"};
+        joinedValues = "xxx|zzz|yyy|1111";
 
         String result = StringUtil.join(values, separator);
         assertEquals(joinedValues, result);
